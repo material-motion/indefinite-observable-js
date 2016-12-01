@@ -17,19 +17,18 @@
 export default class IndefiniteObservable {
   _listeners = new Set();
 
-  constructor({ start, stop }) {
-    this._start = start;
-    this._stop = stop;
+  constructor(creator) {
+    this._creator = creator;
   }
 
   subscribe(listener) {
+    let stop;
     const listeners = this._listeners;
-    const stop = this._stop;
 
     listeners.add(listener);
 
     if (listeners.size === 1) {
-      this._start(
+      stop = this._creator(
         this._dispatch.bind(this)
       );
     }

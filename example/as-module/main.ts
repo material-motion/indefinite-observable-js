@@ -19,54 +19,39 @@ import IndefiniteObservable from '../../src';
 // Make a subclass of IndefiniteObservable to hold whatever operators you like.
 class MyStream extends IndefiniteObservable {
   map(predicate) {
-    let subscription;
-    let subscribe = this.subscribe.bind(this);
-    let parentDispatch;
-
-    let dispatch = function (value) {
-      if (parentDispatch) {
-        parentDispatch(
-          predicate(
-            value
-          )
+   return new MyStream(
+      (dispatch) => {
+        let subscription = this.subscribe(
+          (value) => {
+            dispatch(
+              predicate(
+                value
+              )
+            )
+          }
         );
-      }
-    };
 
-    let result = new MyStream({
-      start(receivedDispatch) {
-        parentDispatch = receivedDispatch;
-        subscription = subscribe(dispatch);
-      },
-
-      stop() {
-        if (subscription) {
+        return () => {
           subscription.unsubscribe();
         }
       }
-    });
-
-    return result;
+    );
   }
 }
 
 function createMove$(element) {
-  let _dispatch;
+  return new MyStream(
+    (dispatch) => {
+      console.log('starting move$');
+      element.addEventListener('mousemove', dispatch);
 
-  return new MyStream({
-    start(dispatch) {
-      _dispatch = dispatch;
-
-      console.log('start');
-      element.addEventListener('mousemove', _dispatch);
-    },
-
-    stop() {
-      console.log('stop');
-      element.innerText = 'stopped'
-      element.removeEventListener('mousemove', _dispatch);
+      return () => {
+        console.log('stopping move$');
+        element.innerText = 'stopped';
+        track.removeEventListener('mousemove', dispatch);
+      }
     }
-  })
+  );
 }
 
 let track = document.getElementById('track');

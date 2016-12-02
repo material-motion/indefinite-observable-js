@@ -1,0 +1,26 @@
+{
+  "name": "indefinite-observable",
+  "version": "0.0.0",
+  "scripts": {
+    "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
+    "build": "yarn run clean; node ./build.js"
+  },
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "typescript:main": "src/index.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "2.1.1",
+    "typescript-pundle": "1.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:com:material-motion/indefinite-observable-js.git"
+  },
+  "author": "The Indefinite Observable Authors (see AUTHORS)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/com:material-motion/indefinite-observable-js/issues/"
+  },
+  "homepage": "https://github.com/com:material-motion/indefinite-observable-js/#readme"
+}

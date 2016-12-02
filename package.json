@@ -3,13 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
-    "build": "yarn run clean; node ./build.js"
+    "build": "yarn run clean; $( yarn bin )/tsc; node ./build.js"
   },
   "main": "dist/index.js",
   "types": "src/index.ts",
   "typescript:main": "src/index.ts",
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
+    "pundle": "1.1.11",
     "typescript": "2.1.1",
     "typescript-pundle": "1.0.1"
   },

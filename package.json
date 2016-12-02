@@ -2,16 +2,19 @@
   "name": "indefinite-observable",
   "version": "0.0.0",
   "scripts": {
+    "start": "node ./devServer.js",
     "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
     "build": "yarn run clean; $( yarn bin )/tsc; node ./build.js"
   },
   "main": "dist/index.js",
+  "browser": "dist/indefinite-observable.js",
   "types": "src/index.ts",
   "typescript:main": "src/index.ts",
   "dependencies": {
   },
   "devDependencies": {
     "pundle": "1.1.11",
+    "pundle-dev": "1.1.11",
     "typescript": "2.1.1",
     "typescript-pundle": "1.0.1"
   },

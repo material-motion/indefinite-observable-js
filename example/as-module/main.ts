@@ -19,11 +19,11 @@ import IndefiniteObservable from '../../src';
 // Make a subclass of IndefiniteObservable to hold whatever operators you like.
 class MyStream extends IndefiniteObservable {
   map(predicate) {
-   return new MyStream(
-      (dispatch) => {
+    return new MyStream(
+      (observer) => {
         let subscription = this.subscribe(
           (value) => {
-            dispatch(
+            observer.next(
               predicate(
                 value
               )
@@ -41,14 +41,14 @@ class MyStream extends IndefiniteObservable {
 
 function createMove$(element) {
   return new MyStream(
-    (dispatch) => {
+    (observer) => {
       console.log('starting move$');
-      element.addEventListener('mousemove', dispatch);
+      element.addEventListener('mousemove', observer.next);
 
       return () => {
         console.log('stopping move$');
         element.innerText = 'stopped';
-        track.removeEventListener('mousemove', dispatch);
+        element.removeEventListener('mousemove', observer.next);
       }
     }
   );
@@ -70,9 +70,11 @@ let excitedMove$ = move$.map(
   x => x + "!!!"
 );
 
-let doubledSubscription = doubledMove$.subscribe(
-  value => doubled.innerText = "doubled: " + value
-);
+let doubledSubscription = doubledMove$.subscribe({
+  next(value) {
+    doubled.innerText = "doubled: " + value;
+  }
+});
 
 let excitedSubscription = excitedMove$.subscribe(
   value => excited.innerText = "excited: " + value

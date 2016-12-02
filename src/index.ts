@@ -25,12 +25,18 @@ export default class IndefiniteObservable {
     let stop;
     const listeners = this._listeners;
 
+    if (!listener.next) {
+      listener = {
+        next: listener,
+      };
+    }
+
     listeners.add(listener);
 
     if (listeners.size === 1) {
-      stop = this._creator(
-        this._dispatch.bind(this)
-      );
+      stop = this._creator({
+        next: this._next.bind(this),
+      });
     }
 
     return {
@@ -44,9 +50,9 @@ export default class IndefiniteObservable {
     }
   }
 
-  _dispatch(value) {
+  _next(value) {
     this._listeners.forEach(
-      listener => listener(value)
+      listener => listener.next(value)
     );
   }
 }

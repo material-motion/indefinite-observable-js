@@ -36,18 +36,35 @@ class MyStream extends IndefiniteObservable {
 }
 
 function createMove$(element) {
+  let observers = new Set();
+
   return new MyStream(
     (observer) => {
-      console.log('starting move$');
       element.addEventListener('mousemove', observer.next);
 
+      console.log('starting move$');
+      observers.add(observer);
+      updateInnerText();
+
       return function unsubscribe () {
-        console.log('stopping move$');
-        element.innerText = 'stopped';
         element.removeEventListener('mousemove', observer.next);
+
+        console.log('stopping move$');
+        observers.delete(observer);
+        updateInnerText();
       }
     }
   );
+
+  function updateInnerText() {
+    let observerCount = observers.size;
+
+    element.innerHTML = `observer count: ${ observerCount }`;
+
+    if (observerCount) {
+      element.innerHTML = `<div><strong>move your pointer here.</strong><br /><br />${ element.innerHTML }</div>`;
+    }
+  }
 }
 
 let track = document.getElementById('track');

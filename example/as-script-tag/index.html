@@ -41,6 +41,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
         flex: 1;
         background-color: #80CBC4;
         color: #006064;
@@ -86,26 +87,40 @@
     }
 
     function createMove$(element) {
+      let observers = new Set();
+
       return new MyStream(
         (observer) => {
-          console.log('starting move$');
           element.addEventListener('mousemove', observer.next);
 
+          console.log('starting move$');
+          observers.add(observer);
+          updateInnerText();
+
           return function unsubscribe () {
-            console.log('stopping move$');
-            element.innerText = 'stopped';
             element.removeEventListener('mousemove', observer.next);
+
+            console.log('stopping move$');
+            observers.delete(observer);
+            updateInnerText();
           }
         }
       );
+
+      function updateInnerText() {
+        let observerCount = observers.size;
+
+        element.innerHTML = `observer count: ${ observerCount }`;
+
+        if (observerCount) {
+          element.innerHTML = `<div><strong>move your pointer here.</strong><br /><br />${ element.innerHTML }</div>`;
+        }
+      }
     }
 
-    // apparently these are defined for you if you use global scope:
-    // http://www.2ality.com/2012/08/ids-are-global.html
-    //
-    // let track = document.getElementById('track');
-    // let doubled = document.getElementById('doubled');
-    // let excited = document.getElementById('excited');
+    let track = document.getElementById('track');
+    let doubled = document.getElementById('doubled');
+    let excited = document.getElementById('excited');
 
     let move$ = createMove$(track).map(
       event => event.pageX

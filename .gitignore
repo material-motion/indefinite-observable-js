@@ -3,5 +3,6 @@ node_modules
 npm-debug.log
 *.pyc
 **/dist/*
+!**/dist/index.js
 !**/dist/indefinite-observable.js
 *.js.map

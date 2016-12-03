@@ -1,55 +1,39 @@
-#!/usr/local/bin/node
+/** @license
+ *  Copyright 2016 - present The Material Motion Authors. All Rights Reserved.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ *  use this file except in compliance with the License. You may obtain a copy
+ *  of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  License for the specific language governing permissions and limitations
+ *  under the License.
+ *
+ *  @flow
+ */
 
-// This file handles bundling (e.g. importing symbol-observable).
-// yarn run build also runs tsc, which generates the d.ts file
-//
-// This might all be overkill, but it will be nice to have proper typechecking
-// and not have to maintain the d.ts by hand.
+const {
+  readFileSync,
+  writeFileSync,
+} = require('fs');
 
-const Path = require('path')
-const Pundle = require('pundle')
-const writeFileSync = require('fs').writeFileSync;
+const source = readFileSync('./dist/index.js').toString();
+const symbolObservable = readFileSync('./third_party/symbol-observable/index.js').toString();
 
-const pundle = new Pundle({
-  entry: [require.resolve('./src/index.ts')],
-  pathType: 'filePath',
-  rootDirectory: __dirname + '/src',
-  replaceVariables: {
-    'process.env.NODE_ENV': 'production',
-  },
-});
-
-pundle.loadPlugins([
-  [
-    'typescript-pundle',
-    {
-      config: {
-        typescriptPath: require.resolve('typescript'),
-        compilerOptions: {
-          lib: [
-            "es2015",
-            "dom"
-          ],
-          noImplicitAny: true,
-          noImplicitThis: true,
-          strictNullChecks: true,
-          target: "es5"
-        }
-      }
-    }
-  ]
-]).then(
-  () => {
-    pundle.loadLoaders([
-      { extensions: ['.ts', '.tsx'], loader: require('pundle/lib/loaders/javascript').default },
-    ])
-
-    return pundle.compile();
-  }
-).then(
-  () => pundle.generate({ sourceMap: true })
-).then(
-  generated => {
-    writeFileSync('./dist/indefinite-observable.js', `${generated.contents}\n//# sourceMappingURL=indefinite-observable.js.map`);
-  }
-).catch(console.error);
+writeFileSync(
+  './dist/indefinite-observable.js',
+  source.replace(
+    /"use strict";\nconst symbol_observable_\d = require\("symbol-observable"\);/,
+    symbolObservable
+  ).replace(
+    /symbol_observable_\d\.default/,
+    '$$observable'
+  ).replace(
+    /Object\.defineProperty\(exports, "__esModule", \{ value: true \}\);\nexports\.default = IndefiniteObservable;\n\/\/# sourceMappingURL=index\.js\.map/,
+    ''
+  )
+);

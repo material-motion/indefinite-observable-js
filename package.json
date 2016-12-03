@@ -14,7 +14,6 @@
     "symbol-observable": "1.0.4"
   },
   "devDependencies": {
-    "pundle": "1.1.11",
     "pundle-dev": "1.1.11",
     "typescript": "2.1.1",
     "typescript-pundle": "1.0.1"

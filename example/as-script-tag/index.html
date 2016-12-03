@@ -74,16 +74,12 @@
             let subscription = this.subscribe(
               (value) => {
                 observer.next(
-                  predicate(
-                    value
-                  )
-                )
+                  predicate(value)
+                );
               }
             );
 
-            return () => {
-              subscription.unsubscribe();
-            }
+            return subscription.unsubscribe;
           }
         );
       }

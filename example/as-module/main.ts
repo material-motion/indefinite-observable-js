@@ -24,16 +24,12 @@ class MyStream extends IndefiniteObservable {
         let subscription = this.subscribe(
           (value) => {
             observer.next(
-              predicate(
-                value
-              )
-            )
+              predicate(value)
+            );
           }
         );
 
-        return () => {
-          subscription.unsubscribe();
-        }
+        return subscription.unsubscribe;
       }
     );
   }
@@ -45,7 +41,7 @@ function createMove$(element) {
       console.log('starting move$');
       element.addEventListener('mousemove', observer.next);
 
-      return () => {
+      return function unsubscribe () {
         console.log('stopping move$');
         element.innerText = 'stopped';
         element.removeEventListener('mousemove', observer.next);
@@ -86,7 +82,7 @@ doubled.addEventListener(
     doubledSubscription.unsubscribe();
     doubled.innerText = 'unsubscribed';
   }
-)
+);
 
 excited.addEventListener(
   'click',
@@ -94,4 +90,4 @@ excited.addEventListener(
     excitedSubscription.unsubscribe();
     excited.innerText = 'unsubscribed';
   }
-)
+);

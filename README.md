@@ -54,4 +54,4 @@ or include as a script tag:
 
 ## License ##
 
-Licensed under the Apache 2.0 license. See LICENSE for details.
+[Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)

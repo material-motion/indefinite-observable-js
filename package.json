@@ -11,6 +11,7 @@
   "types": "src/index.ts",
   "typescript:main": "src/index.ts",
   "dependencies": {
+    "symbol-observable": "1.0.4"
   },
   "devDependencies": {
     "pundle": "1.1.11",

@@ -14,6 +14,8 @@
  *  under the License.
  */
 
+import $$observable from 'symbol-observable';
+
 import {
   Unsubscribe,
   Subscription,
@@ -40,5 +42,14 @@ export default class IndefiniteObservable<T> {
     let unsubscribe: Unsubscribe = this._creator(listener as Observer);
 
     return { unsubscribe }
+  }
+
+  /**
+   * Tells other libraries that know about observables that we are one.
+   *
+   * https://github.com/tc39/proposal-observable#observable
+   */
+  [$$observable](): IndefiniteObservable<T> {
+    return this;
   }
 }

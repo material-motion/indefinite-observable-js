@@ -14,6 +14,7 @@
  *  under the License.
  */
 "use strict";
+const symbol_observable_1 = require("symbol-observable");
 class IndefiniteObservable {
     constructor(creator) {
         this._creator = creator;
@@ -26,6 +27,14 @@ class IndefiniteObservable {
         }
         let unsubscribe = this._creator(listener);
         return { unsubscribe };
+    }
+    /**
+     * Tells other libraries that know about observables that we are one.
+     *
+     * https://github.com/tc39/proposal-observable#observable
+     */
+    [symbol_observable_1.default]() {
+        return this;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

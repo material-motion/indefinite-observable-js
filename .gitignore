@@ -3,4 +3,5 @@ node_modules
 npm-debug.log
 *.pyc
 **/dist/*
+!**/dist/indefinite-observable.js
 *.js.map

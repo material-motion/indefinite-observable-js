@@ -14,20 +14,30 @@
  *  under the License.
  */
 
-export default class IndefiniteObservable {
-  _listeners = new Set();
+import {
+  Unsubscribe,
+  Subscription,
+  Next,
+  Observer,
+  Creator,
+  Listener,
+} from './types';
 
-  constructor(creator) {
+export default class IndefiniteObservable<T> {
+  _listeners = new Set();
+  _creator: Creator;
+
+  constructor(creator: Creator) {
     this._creator = creator;
   }
 
-  subscribe(listener) {
-    let stop;
+  subscribe(listener: Listener): Subscription {
+    let stop: Unsubscribe;
     const listeners = this._listeners;
 
-    if (!listener.next) {
+    if (!(listener as Observer).next) {
       listener = {
-        next: listener,
+        next: (listener as Next),
       };
     }
 
@@ -50,7 +60,7 @@ export default class IndefiniteObservable {
     }
   }
 
-  _next(value) {
+  _next(value: T) {
     this._listeners.forEach(
       listener => listener.next(value)
     );

@@ -16,15 +16,6 @@
 
 import $$observable from 'symbol-observable';
 
-import {
-  Unsubscribe,
-  Subscription,
-  Next,
-  Observer,
-  Creator,
-  Listener,
-} from './types';
-
 export default class IndefiniteObservable<T> {
   _creator: Creator;
 
@@ -33,6 +24,11 @@ export default class IndefiniteObservable<T> {
   }
 
   subscribe(listener: Listener): Subscription {
+    // subscribe accepts next as either an anonymous function or as a named
+    // member on an object.  The creator always expects an object with a
+    // function named next.  Therefore, if we receive an anonymous function, we
+    // wrap it in an object literal.
+
     if (!(listener as Observer).next) {
       listener = {
         next: (listener as Next),
@@ -41,7 +37,9 @@ export default class IndefiniteObservable<T> {
 
     let unsubscribe: Unsubscribe = this._creator(listener as Observer);
 
-    return { unsubscribe }
+    return {
+      unsubscribe,
+    };
   }
 
   /**
@@ -52,4 +50,19 @@ export default class IndefiniteObservable<T> {
   [$$observable](): IndefiniteObservable<T> {
     return this;
   }
+}
+
+
+// Hey look: types!  Don't be afraid.  They won't bite.
+
+export type Creator = (observer: Observer) => Unsubscribe;
+export type Observer = {
+  next: Next,
+}
+export type Next = (value: any) => void;
+export type Listener = Observer | Next;
+
+export type Unsubscribe = () => void;
+export type Subscription = {
+  unsubscribe: Unsubscribe,
 }

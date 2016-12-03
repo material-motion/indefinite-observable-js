@@ -30,8 +30,8 @@ const moveEvent$ = new IndefiniteObservable(
   }
 );
 
-// Call subscribe with an argument named next to receive values dispatched by
-// the observable.
+// To receive the values dispatched by an observable, pass an observer to its
+// subscribe method.  An observer is just an object with a next method.
 //
 // subscribe returns a unsubscribe function.  Call that when you no longer want
 // to receive dispatches from the observable.

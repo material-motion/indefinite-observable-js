@@ -14,6 +14,9 @@
  *  under the License.
  */
 
+// Just a root node to make hot-module-replacement work.  The actual example is
+// in main.js
+
 import './main';
 
 if (module.hot) {

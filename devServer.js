@@ -32,7 +32,7 @@ const server = new PundleDev({
     }
   },
   pundle: {
-    entry: [require.resolve('./example/as-module/index.ts')],
+    entry: [require.resolve('./example/as-module/index.js')],
     pathType: 'filePath',
     rootDirectory: __dirname,
     replaceVariables: {
@@ -50,6 +50,7 @@ server.pundle.loadPlugins([
   [
     'typescript-pundle',
     {
+      extensions: ['.js', '.ts', '.tsx'],
       config: {
         compilerOptions: {
           jsx: 'react',
@@ -62,7 +63,7 @@ server.pundle.loadPlugins([
   () => {
     server.pundle.loadLoaders([
       {
-        extensions: ['.ts', '.tsx'],
+        extensions: ['.js', '.ts', '.tsx'],
         loader: require('pundle/lib/loaders/javascript').default
       },
     ])

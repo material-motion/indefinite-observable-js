@@ -24,7 +24,6 @@ import {
 } from './types';
 
 export default class IndefiniteObservable<T> {
-  _listeners = new Set();
   _creator: Creator;
 
   constructor(creator: Creator) {
@@ -32,37 +31,14 @@ export default class IndefiniteObservable<T> {
   }
 
   subscribe(listener: Listener): Subscription {
-    let stop: Unsubscribe;
-    const listeners = this._listeners;
-
     if (!(listener as Observer).next) {
       listener = {
         next: (listener as Next),
       };
     }
 
-    listeners.add(listener);
+    let unsubscribe: Unsubscribe = this._creator(listener as Observer);
 
-    if (listeners.size === 1) {
-      stop = this._creator({
-        next: this._next.bind(this),
-      });
-    }
-
-    return {
-      unsubscribe() {
-        listeners.delete(listener);
-
-        if (listeners.size === 0 && stop) {
-          stop();
-        }
-      }
-    }
-  }
-
-  _next(value: T) {
-    this._listeners.forEach(
-      listener => listener.next(value)
-    );
+    return { unsubscribe }
   }
 }

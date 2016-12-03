@@ -16,34 +16,16 @@
 "use strict";
 class IndefiniteObservable {
     constructor(creator) {
-        this._listeners = new Set();
         this._creator = creator;
     }
     subscribe(listener) {
-        let stop;
-        const listeners = this._listeners;
         if (!listener.next) {
             listener = {
                 next: listener,
             };
         }
-        listeners.add(listener);
-        if (listeners.size === 1) {
-            stop = this._creator({
-                next: this._next.bind(this),
-            });
-        }
-        return {
-            unsubscribe() {
-                listeners.delete(listener);
-                if (listeners.size === 0 && stop) {
-                    stop();
-                }
-            }
-        };
-    }
-    _next(value) {
-        this._listeners.forEach(listener => listener.next(value));
+        let unsubscribe = this._creator(listener);
+        return { unsubscribe };
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

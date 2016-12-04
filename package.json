@@ -4,7 +4,8 @@
   "scripts": {
     "start": "node ./devServer.js",
     "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
-    "build": "yarn run clean; $( yarn bin )/tsc; node ./build.js"
+    "build": "yarn run clean; $( yarn bin )/tsc; node ./build.js",
+    "prepublish": "yarn run build"
   },
   "main": "dist/index.js",
   "browser": "dist/indefinite-observable.js",
@@ -14,10 +15,14 @@
     "symbol-observable": "1.0.4"
   },
   "devDependencies": {
+    "pre-commit": "1.1.3",
     "pundle-dev": "1.1.11",
     "typescript": "2.1.1",
     "typescript-pundle": "1.0.1"
   },
+  "pre-commit": [
+    "build"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:com:material-motion/indefinite-observable-js.git"

@@ -54,6 +54,25 @@ or include as a script tag:
 <script src = 'https://unpkg.com/indefinite-observable/dist/indefinite-observable.js'></script>
 ```
 
+## Contributing ##
+
+This library aims to be as simple as possible, so modifications will be rare.  Reasons we might make changes are limited to:
+
+- bugs, or
+- remaining compatible with the subset of the Observable spec that we support.
+
+If you'd like to add operators, static methods, or other features, we invite you to depend upon us subclassing `IndefiniteObservable` in your own module.  In fact, that's how we add features too.
+
+Of course, we welcome improvements to the examples and documentation in this repo.
+
+### Bundling ###
+
+Our source is available in 3 flavors: a TypeScript module, a JavaScript module, and a JavaScript bundle.  Any changes made to the first need to be reflected in the other two.  This should be handled for you automatically via a pre-commit hook.  If you need to bundle it independently, run
+
+```
+yarn run build
+```
+
 ## License ##
 
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)

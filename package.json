@@ -8,8 +8,8 @@
     "prepublish": "yarn run build"
   },
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "browser": "dist/indefinite-observable.js",
-  "types": "src/index.ts",
   "typescript:main": "src/index.ts",
   "dependencies": {
     "symbol-observable": "1.0.4"

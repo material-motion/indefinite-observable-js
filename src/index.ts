@@ -16,7 +16,7 @@
 
 import $$observable from 'symbol-observable';
 
-export default class IndefiniteObservable<T> {
+export default class IndefiniteObservable<T> implements Observable {
   _creator: Creator;
 
   constructor(creator: Creator) {
@@ -54,6 +54,10 @@ export default class IndefiniteObservable<T> {
 
 
 // Hey look: types!  Don't be afraid.  They won't bite.
+
+export interface Observable {
+  subscribe(listener: Observer | Next): Subscription;
+}
 
 export type Creator = (observer: Observer) => Unsubscribe;
 export type Observer = {

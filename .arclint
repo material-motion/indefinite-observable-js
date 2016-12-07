@@ -3,10 +3,14 @@
     "chmod": {
       "type": "chmod"
     },
-    "js": {
+    "js-lint": {
       "type": "tslint",
       "include": "(src/.*\\.(ts)$)",
       "tslint.project": "tsconfig.json"
+    },
+    "js-build": {
+      "type": "tsc",
+      "include": "(src/.*\\.(ts)$)"
     },
     "prose": {
       "type": "prose",

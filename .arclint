@@ -3,6 +3,11 @@
     "chmod": {
       "type": "chmod"
     },
+    "js": {
+      "type": "tslint",
+      "include": "(src/.*\\.(ts)$)",
+      "tslint.project": "tsconfig.json"
+    },
     "prose": {
       "type": "prose",
       "include": "(\\.(md)$)",
@@ -10,6 +15,7 @@
         "(^CHANGELOG.md)"
       ],
       "severity": {
+        "consistency.spacing": "disabled",
         "typography.symbols.curly_quotes": "disabled",
         "typography.symbols.ellipsis": "disabled",
         "leonard.exclamation.30ppm": "disabled",

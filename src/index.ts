@@ -16,7 +16,7 @@
 
 import $$observable from 'symbol-observable';
 
-export default class IndefiniteObservable<T> implements Observable {
+export default class IndefiniteObservable<T> implements Observable<T> {
   _creator: Creator;
 
   constructor(creator: Creator) {
@@ -52,17 +52,19 @@ export default class IndefiniteObservable<T> implements Observable {
   }
 }
 
-
 // Hey look: types!  Don't be afraid.  They won't bite.
 
-export interface Observable {
+export interface Observable<T> {
   subscribe(listener: Observer | Next): Subscription;
 }
 
-export type Creator = (observer: Observer) => Unsubscribe;
-export type Observer = {
+// TODO: what's the difference between a type and an interface?
+// (TS only lets you extend and interface)
+export interface Observer {
   next: Next,
 }
+
+export type Creator = (observer: Observer) => Unsubscribe;
 export type Next = (value: any) => void;
 export type Listener = Observer | Next;
 

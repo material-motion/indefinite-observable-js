@@ -73,6 +73,12 @@ Our source is available in 3 flavors: a TypeScript module, a JavaScript module, 
 yarn run build
 ```
 
+### Testing ###
+
+```
+yarn run test
+```
+
 ## License ##
 
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)

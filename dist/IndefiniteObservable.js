@@ -15,17 +15,17 @@
  */
 "use strict";
 const symbol_observable_1 = require("symbol-observable");
-const wrapListenerWithObserver_1 = require("./wrapListenerWithObserver");
+const wrapWithObserver_1 = require("./wrapWithObserver");
 class IndefiniteObservable {
     constructor(creator) {
         this._creator = creator;
     }
-    subscribe(listener) {
+    subscribe(observerOrNext) {
         // subscribe accepts next as either an anonymous function or as a named
         // member on an object.  The creator always expects an object with a
         // function named next.  Therefore, if we receive an anonymous function, we
         // wrap it in an object literal.
-        const observer = wrapListenerWithObserver_1.default(listener);
+        const observer = wrapWithObserver_1.default(observerOrNext);
         let unsubscribe = this._creator(observer);
         return {
             unsubscribe,

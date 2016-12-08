@@ -15,7 +15,7 @@
  */
 "use strict";
 const symbol_observable_1 = require("symbol-observable");
-const wrapListenerWithObserver_1 = require("./wrapListenerWithObserver");
+const wrapWithObserver_1 = require("./wrapWithObserver");
 class IndefiniteSubject {
     constructor() {
         // Keep track of all the observers who have subscribed, so we can notify them
@@ -31,8 +31,8 @@ class IndefiniteSubject {
         // dispatch.
         this._observers.forEach((observer) => observer.next(value));
     }
-    subscribe(listener) {
-        const observer = wrapListenerWithObserver_1.default(listener);
+    subscribe(observerOrNext) {
+        const observer = wrapWithObserver_1.default(observerOrNext);
         this._observers.add(observer);
         if (this._hasStarted) {
             observer.next(this._lastValue);

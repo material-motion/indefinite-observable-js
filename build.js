@@ -38,7 +38,7 @@ const licenseText = `/** @license
 
 const observableSource = readFileSync('./dist/IndefiniteObservable.js').toString();
 const subjectSource = readFileSync('./dist/IndefiniteSubject.js').toString();
-const wrapListenerWithObserverSource = readFileSync('./dist/wrapListenerWithObserver.js').toString();
+const wrapWithObserverSource = readFileSync('./dist/wrapWithObserver.js').toString();
 const symbolObservable = readFileSync('./third_party/symbol-observable/index.js').toString();
 
 writeFileSync(
@@ -46,7 +46,7 @@ writeFileSync(
   licenseText + '\n' +[
     observableSource.replace(licenseText, ''),
     subjectSource.replace(licenseText, ''),
-    wrapListenerWithObserverSource.replace(licenseText, ''),
+    wrapWithObserverSource.replace(licenseText, ''),
   ].join('\n\n').replace(
     /const symbol_observable_\d = require\("symbol-observable"\);/,
     symbolObservable
@@ -54,7 +54,7 @@ writeFileSync(
     /const symbol_observable_\d = require\("symbol-observable"\);/,
     ''
   ).replace(
-    /const wrapListenerWithObserver_\d = require\(".\/wrapListenerWithObserver"\);/g,
+    /const wrapWithObserver_\d = require\(".\/wrapWithObserver"\);/g,
     ''
   ).replace(
     // strip comments
@@ -64,8 +64,8 @@ writeFileSync(
     /symbol_observable_\d\.default/g,
     '$$observable'
   ).replace(
-    /wrapListenerWithObserver_\d\.default/g,
-    'wrapListenerWithObserver'
+    /wrapWithObserver_\d\.default/g,
+    'wrapWithObserver'
   ).replace(
     /Object\.defineProperty\(exports, "__esModule", \{ value: true \}\);/g,
     ''

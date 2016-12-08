@@ -78,8 +78,8 @@ class IndefiniteObservable {
     constructor(creator) {
         this._creator = creator;
     }
-    subscribe(listener) {
-        const observer = wrapListenerWithObserver(listener);
+    subscribe(observerOrNext) {
+        const observer = wrapWithObserver(observerOrNext);
         let unsubscribe = this._creator(observer);
         return {
             unsubscribe,
@@ -105,8 +105,8 @@ class IndefiniteSubject {
         this._lastValue = value;
         this._observers.forEach((observer) => observer.next(value));
     }
-    subscribe(listener) {
-        const observer = wrapListenerWithObserver(listener);
+    subscribe(observerOrNext) {
+        const observer = wrapWithObserver(observerOrNext);
         this._observers.add(observer);
         if (this._hasStarted) {
             observer.next(this._lastValue);
@@ -127,7 +127,7 @@ class IndefiniteSubject {
     }
 }
 
-function wrapListenerWithObserver(listener) {
+function wrapWithObserver(listener) {
     if (listener.next) {
         return listener;
     }

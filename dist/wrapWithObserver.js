@@ -13,5 +13,23 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-import { Observer, Listener } from './types';
-export default function wrapListenerWithObserver<T>(listener: Listener<T>): Observer<T>;
+"use strict";
+// TypeScript is a pain to use with polymorphic types unless you wrap them in a
+// function that returns a single type.  So, that's what this is.
+//
+// If you give it an observer, you get back that observer.  If you give it an
+// anonymous function, you get back that anonymous function wrapped in an
+// observer.
+function wrapWithObserver(listener) {
+    if (listener.next) {
+        return listener;
+    }
+    else {
+        return {
+            next: listener
+        };
+    }
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = wrapWithObserver;
+//# sourceMappingURL=wrapWithObserver.js.map

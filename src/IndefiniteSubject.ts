@@ -16,13 +16,13 @@
 
 import $$observable from 'symbol-observable';
 
-import wrapListenerWithObserver from './wrapListenerWithObserver';
+import wrapWithObserver from './wrapWithObserver';
 
 import {
   Channel,
-  Listener,
   Observable,
   Observer,
+  ObserverOrNext,
   Subscription,
   Unsubscribe,
 } from './types';
@@ -46,8 +46,8 @@ export default class IndefiniteSubject<T> implements Observable<T>, Observer<T> 
     );
   }
 
-  subscribe(listener: Listener<T>): Subscription {
-    const observer = wrapListenerWithObserver<T>(listener);
+  subscribe(observerOrNext: ObserverOrNext<T>): Subscription {
+    const observer = wrapWithObserver<T>(observerOrNext);
 
     this._observers.add(observer);
 

@@ -16,19 +16,21 @@
 
 import $$observable from 'symbol-observable';
 
+import wrapListenerWithObserver from './wrapListenerWithObserver';
+
 import {
+  Channel,
   Listener,
-  Next,
-  Observer,
   Observable,
+  Observer,
   Subscription,
   Unsubscribe,
 } from './types';
 
-export default class IndefiniteSubject<T> implements Observable<T>, Observer {
+export default class IndefiniteSubject<T> implements Observable<T>, Observer<T> {
   // Keep track of all the observers who have subscribed, so we can notify them
   // when we get new values.
-  _observers: Set<Observer> = new Set();
+  _observers: Set<Observer<T>> = new Set();
   _lastValue: T;
   _hasStarted: boolean = false;
 
@@ -40,12 +42,12 @@ export default class IndefiniteSubject<T> implements Observable<T>, Observer {
     // children, and cache it for any observers that subscribe before the next
     // dispatch.
     this._observers.forEach(
-      (observer: Observer) => observer.next(value)
+      (observer: Observer<T>) => observer.next(value)
     );
   }
 
-  subscribe(listener: Listener): Subscription {
-    const observer = wrapListenerWithObserver(listener);
+  subscribe(listener: Listener<T>): Subscription {
+    const observer = wrapListenerWithObserver<T>(listener);
 
     this._observers.add(observer);
 
@@ -67,21 +69,5 @@ export default class IndefiniteSubject<T> implements Observable<T>, Observer {
    */
   [$$observable](): Observable<T> {
     return this;
-  }
-}
-
-// TypeScript is a pain to use with polymorphic types unless you wrap them in a
-// function that returns a single type.  So, that's what this is.
-//
-// If you give it an observer, you get back that observer.  If you give it a
-// lambda, you get back that lambda wrapped in an observer.
-function wrapListenerWithObserver(listener: Listener): Observer {
-  if ((listener as Observer).next) {
-    return (listener as Observer);
-
-  } else {
-    return {
-      next: (listener as Next)
-    }
   }
 }

@@ -13,16 +13,29 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-export interface Observable<T> {
-    subscribe(listener: Observer<T> | Channel<T>): Subscription;
-}
-export interface Observer<T> {
-    next: Channel<any>;
-}
-export declare type Creator<T> = (observer: Observer<T>) => Unsubscribe;
-export declare type Channel<T> = (value: T) => void;
-export declare type Listener<T> = Observer<T> | Channel<T>;
-export declare type Unsubscribe = () => void;
-export interface Subscription {
-    unsubscribe: Unsubscribe;
+
+import {
+  Observable,
+  Observer,
+  Creator,
+  Channel,
+  Listener,
+  Unsubscribe,
+  Subscription,
+} from './types';
+
+// TypeScript is a pain to use with polymorphic types unless you wrap them in a
+// function that returns a single type.  So, that's what this is.
+//
+// If you give it an observer, you get back that observer.  If you give it a
+// lambda, you get back that lambda wrapped in an observer.
+export default function wrapListenerWithObserver<T>(listener: Listener<T>): Observer<T> {
+  if ((listener as Observer<T>).next) {
+    return (listener as Observer<T>);
+
+  } else {
+    return {
+      next: (listener as Channel<T>)
+    }
+  }
 }

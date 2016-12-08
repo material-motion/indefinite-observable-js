@@ -15,17 +15,17 @@
  */
 
 export interface Observable<T> {
-  subscribe(listener: Observer | Next): Subscription;
+  subscribe(listener: Observer<T> | Channel<T>): Subscription;
 }
 
-export interface Observer {
-  next: Next,
+export interface Observer<T> {
+  next: Channel<any>,
 }
 
-export type Creator = (observer: Observer) => Unsubscribe;
+export type Creator<T> = (observer: Observer<T>) => Unsubscribe;
 
-export type Next = (value: any) => void;
-export type Listener = Observer | Next;
+export type Channel<T> = (value: T) => void;
+export type Listener<T> = Observer<T> | Channel<T>;
 
 export type Unsubscribe = () => void;
 export interface Subscription {

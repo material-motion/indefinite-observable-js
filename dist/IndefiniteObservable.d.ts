@@ -1,6 +1,6 @@
-import { Observable, Creator, Listener, Subscription } from './types';
+import { Creator, Listener, Observable, Subscription } from './types';
 export default class IndefiniteObservable<T> implements Observable<T> {
-    _creator: Creator;
-    constructor(creator: Creator);
-    subscribe(listener: Listener): Subscription;
+    _creator: Creator<T>;
+    constructor(creator: Creator<T>);
+    subscribe(listener: Listener<T>): Subscription;
 }

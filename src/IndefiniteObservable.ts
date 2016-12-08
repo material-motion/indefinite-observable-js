@@ -16,36 +16,34 @@
 
 import $$observable from 'symbol-observable';
 
+import wrapListenerWithObserver from './wrapListenerWithObserver';
+
 import {
+  Channel,
+  Creator,
+  Listener,
   Observable,
   Observer,
-  Creator,
-  Next,
-  Listener,
-  Unsubscribe,
   Subscription,
+  Unsubscribe,
 } from './types';
 
 export default class IndefiniteObservable<T> implements Observable<T> {
-  _creator: Creator;
+  _creator: Creator<T>;
 
-  constructor(creator: Creator) {
+  constructor(creator: Creator<T>) {
     this._creator = creator;
   }
 
-  subscribe(listener: Listener): Subscription {
+  subscribe(listener: Listener<T>): Subscription {
     // subscribe accepts next as either an anonymous function or as a named
     // member on an object.  The creator always expects an object with a
     // function named next.  Therefore, if we receive an anonymous function, we
     // wrap it in an object literal.
 
-    if (!(listener as Observer).next) {
-      listener = {
-        next: (listener as Next),
-      };
-    }
+    const observer = wrapListenerWithObserver<T>(listener);
 
-    let unsubscribe: Unsubscribe = this._creator(listener as Observer);
+    let unsubscribe: Unsubscribe = this._creator(observer);
 
     return {
       unsubscribe,

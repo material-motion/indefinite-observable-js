@@ -13,16 +13,5 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-export interface Observable<T> {
-    subscribe(listener: Observer<T> | Channel<T>): Subscription;
-}
-export interface Observer<T> {
-    next: Channel<any>;
-}
-export declare type Creator<T> = (observer: Observer<T>) => Unsubscribe;
-export declare type Channel<T> = (value: T) => void;
-export declare type Listener<T> = Observer<T> | Channel<T>;
-export declare type Unsubscribe = () => void;
-export interface Subscription {
-    unsubscribe: Unsubscribe;
-}
+import { Observer, Listener } from './types';
+export default function wrapListenerWithObserver<T>(listener: Listener<T>): Observer<T>;

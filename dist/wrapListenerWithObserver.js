@@ -13,16 +13,22 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-export interface Observable<T> {
-    subscribe(listener: Observer<T> | Channel<T>): Subscription;
+"use strict";
+// TypeScript is a pain to use with polymorphic types unless you wrap them in a
+// function that returns a single type.  So, that's what this is.
+//
+// If you give it an observer, you get back that observer.  If you give it a
+// lambda, you get back that lambda wrapped in an observer.
+function wrapListenerWithObserver(listener) {
+    if (listener.next) {
+        return listener;
+    }
+    else {
+        return {
+            next: listener
+        };
+    }
 }
-export interface Observer<T> {
-    next: Channel<any>;
-}
-export declare type Creator<T> = (observer: Observer<T>) => Unsubscribe;
-export declare type Channel<T> = (value: T) => void;
-export declare type Listener<T> = Observer<T> | Channel<T>;
-export declare type Unsubscribe = () => void;
-export interface Subscription {
-    unsubscribe: Unsubscribe;
-}
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = wrapListenerWithObserver;
+//# sourceMappingURL=wrapListenerWithObserver.js.map

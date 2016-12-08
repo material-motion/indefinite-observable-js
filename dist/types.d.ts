@@ -17,7 +17,7 @@ export interface Observable<T> {
     subscribe(listener: Observer<T> | Channel<T>): Subscription;
 }
 export interface Observer<T> {
-    next: Channel<any>;
+    next: Channel<T>;
 }
 export declare type Creator<T> = (observer: Observer<T>) => Unsubscribe;
 export declare type Channel<T> = (value: T) => void;

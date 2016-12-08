@@ -19,12 +19,10 @@ import $$observable from 'symbol-observable';
 import wrapWithObserver from './wrapWithObserver';
 
 import {
-  Channel,
   Observable,
   Observer,
   ObserverOrNext,
   Subscription,
-  Unsubscribe,
 } from './types';
 
 export default class IndefiniteSubject<T> implements Observable<T>, Observer<T> {
@@ -59,7 +57,7 @@ export default class IndefiniteSubject<T> implements Observable<T>, Observer<T> 
       unsubscribe: () => {
         this._observers.delete(observer);
       }
-    }
+    };
   }
 
   /**

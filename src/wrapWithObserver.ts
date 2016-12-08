@@ -15,13 +15,9 @@
  */
 
 import {
-  Observable,
-  Observer,
-  Creator,
   Channel,
+  Observer,
   ObserverOrNext,
-  Unsubscribe,
-  Subscription,
 } from './types';
 
 // TypeScript is a pain to use with polymorphic types unless you wrap them in a
@@ -37,6 +33,6 @@ export default function wrapWithObserver<T>(listener: ObserverOrNext<T>): Observ
   } else {
     return {
       next: (listener as Channel<T>)
-    }
+    };
   }
 }

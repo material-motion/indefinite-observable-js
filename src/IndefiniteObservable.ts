@@ -19,10 +19,8 @@ import $$observable from 'symbol-observable';
 import wrapWithObserver from './wrapWithObserver';
 
 import {
-  Channel,
   Creator,
   Observable,
-  Observer,
   ObserverOrNext,
   Subscription,
   Unsubscribe,

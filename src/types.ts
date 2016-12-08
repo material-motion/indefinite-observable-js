@@ -19,7 +19,7 @@ export interface Observable<T> {
 }
 
 export interface Observer<T> {
-  next: Channel<any>,
+  next: Channel<T>,
 }
 
 export type Creator<T> = (observer: Observer<T>) => Unsubscribe;

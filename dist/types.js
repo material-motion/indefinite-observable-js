@@ -14,10 +14,4 @@
  *  under the License.
  */
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(require("./IndefiniteObservable"));
-var IndefiniteObservable_1 = require("./IndefiniteObservable");
-exports.IndefiniteObservable = IndefiniteObservable_1.default;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=types.js.map

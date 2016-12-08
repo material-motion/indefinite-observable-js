@@ -14,60 +14,7 @@
  *  under the License.
  */
 
-import $$observable from 'symbol-observable';
+export * from './types';
 
-export default class IndefiniteObservable<T> implements Observable<T> {
-  _creator: Creator;
-
-  constructor(creator: Creator) {
-    this._creator = creator;
-  }
-
-  subscribe(listener: Listener): Subscription {
-    // subscribe accepts next as either an anonymous function or as a named
-    // member on an object.  The creator always expects an object with a
-    // function named next.  Therefore, if we receive an anonymous function, we
-    // wrap it in an object literal.
-
-    if (!(listener as Observer).next) {
-      listener = {
-        next: (listener as Next),
-      };
-    }
-
-    let unsubscribe: Unsubscribe = this._creator(listener as Observer);
-
-    return {
-      unsubscribe,
-    };
-  }
-
-  /**
-   * Tells other libraries that know about observables that we are one.
-   *
-   * https://github.com/tc39/proposal-observable#observable
-   */
-  [$$observable](): IndefiniteObservable<T> {
-    return this;
-  }
-}
-
-// Hey look: types!  Don't be afraid.  They won't bite.
-
-export interface Observable<T> {
-  subscribe(listener: Observer | Next): Subscription;
-}
-
-export interface Observer {
-  next: Next,
-}
-
-export type Creator = (observer: Observer) => Unsubscribe;
-
-export type Next = (value: any) => void;
-export type Listener = Observer | Next;
-
-export type Unsubscribe = () => void;
-export interface Subscription {
-  unsubscribe: Unsubscribe,
-}
+export * from './IndefiniteObservable';
+export { default as IndefiniteObservable } from './IndefiniteObservable';

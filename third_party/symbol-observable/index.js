@@ -1,6 +1,6 @@
 
-// for symbol-observable:
-/** @license
+
+/** @license for symbol-observable:
  * The MIT License (MIT)
  *
  * Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)

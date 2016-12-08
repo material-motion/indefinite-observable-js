@@ -21,19 +21,33 @@ const {
   writeFileSync,
 } = require('fs');
 
-const source = readFileSync('./dist/index.js').toString();
+const observableSource = readFileSync('./dist/IndefiniteObservable.js').toString();
+const subjectSource = readFileSync('./dist/IndefiniteSubject.js').toString();
 const symbolObservable = readFileSync('./third_party/symbol-observable/index.js').toString();
 
 writeFileSync(
   './dist/indefinite-observable.js',
-  source.replace(
+  [
+    observableSource,
+    subjectSource,
+  ].join('\n\n').replace(
     /"use strict";\nconst symbol_observable_\d = require\("symbol-observable"\);/,
     symbolObservable
   ).replace(
-    /symbol_observable_\d\.default/,
+    /"use strict";\nconst symbol_observable_\d = require\("symbol-observable"\);/,
+    ''
+  ).replace(
+    // strip comments
+    /\n^\s*\/\/.*$/mg,
+    ''
+  ).replace(
+    /symbol_observable_\d\.default/g,
     '$$observable'
   ).replace(
-    /Object\.defineProperty\(exports, "__esModule", \{ value: true \}\);\nexports\.default = IndefiniteObservable;\n\/\/# sourceMappingURL=index\.js\.map/,
+    /Object\.defineProperty\(exports, "__esModule", \{ value: true \}\);/g,
+    ''
+  ).replace(
+    /exports\.default = \w+;/g,
     ''
   )
 );

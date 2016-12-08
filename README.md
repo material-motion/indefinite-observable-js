@@ -5,7 +5,7 @@
 
 ## Why? ##
 
-There are a lot of great Observable implementations, but they're baked into featureful libraries which contribute to both complexity and filesize.  We wanted the simplest-possible Observable implementation, with no operators, no fancy scheduling: [read the entire source](https://github.com/material-motion/indefinite-observable-js/blob/develop/dist/index.js) without scrolling.
+There are a lot of great Observable implementations, but they're baked into featureful libraries which contribute to both complexity and filesize.  We wanted the simplest-possible Observable implementation, with no operators, no fancy scheduling: [read the entire source](https://github.com/material-motion/indefinite-observable-js/blob/develop/src/IndefiniteObservable.ts) without scrolling.
 
 Indefinite Observable is a subset of the [TC39 Observable proposal](https://tc39.github.io/proposal-observable/) that never `complete`s or `error`s.  It implements the [minimal-necessary functionality](https://en.wikipedia.org/wiki/You_aren't_gonna_need_it), but it should be completely interchangable with the TC39 proposal for the subset that it does implement.
 

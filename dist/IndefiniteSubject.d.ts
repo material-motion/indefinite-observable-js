@@ -13,14 +13,11 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+import { Listener, Observer, Observable, Subscription } from './types';
+export default class IndefiniteSubject<T> implements Observable<T>, Observer {
+    _observers: Set<Observer>;
+    _lastValue: T;
+    _hasStarted: boolean;
+    next(value: T): void;
+    subscribe(listener: Listener): Subscription;
 }
-__export(require("./IndefiniteObservable"));
-var IndefiniteObservable_1 = require("./IndefiniteObservable");
-exports.IndefiniteObservable = IndefiniteObservable_1.default;
-__export(require("./IndefiniteSubject"));
-var IndefiniteSubject_1 = require("./IndefiniteSubject");
-exports.IndefiniteSubject = IndefiniteSubject_1.default;
-//# sourceMappingURL=index.js.map

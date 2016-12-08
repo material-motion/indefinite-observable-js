@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "array-type": [true, "array-simple"],
+    "class-name": true,
+    "forin": true,
+    "interface-name": [true, "never-prefix"],
+    "jsdoc-format": true,
+    "label-position": true,
+    "new-parens": true,
+    "no-angle-bracket-type-assertion": true,
+    "no-construct": true,
+    "no-debugger": true,
+    "no-namespace": [true, "allow-declarations"],
+    "no-reference": true,
+    "no-require-imports": true,
+    "no-unused-expression": true,
+    "no-use-before-declare": false,
+    "no-var-keyword": true,
+    "radix": true,
+    "semicolon": [true, "always"],
+    "switch-default": true,
+    "triple-equals": [true, "allow-null-check"],
+    "use-isnan": true,
+    "variable-name": [
+      true,
+      "check-format",
+      "ban-keywords",
+      "allow-leading-underscore",
+      "allow-trailing-underscore"
+    ]
+  }
+}

@@ -11,6 +11,8 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "dist",
     "sourceMap": true,
     "strictNullChecks": true,

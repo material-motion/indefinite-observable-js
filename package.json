@@ -5,6 +5,7 @@
     "start": "node ./devServer.js",
     "test": "$( yarn bin )/karma start",
     "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
+    "lint": "$( yarn bin )/tslint -c tslint.json --project tsconfig.json",
     "build": "yarn run clean; $( yarn bin )/tsc; node ./build.js",
     "prepublish": "yarn run build"
   },
@@ -30,6 +31,7 @@
     "sinon-chai": "2.8.0",
     "ts-loader": "0.9.0",
     "tsickle": "0.2.0",
+    "tslint": "4.0.2",
     "typescript": "2.1.4",
     "typescript-pundle": "1.0.1",
     "webpack": "2.1.0-beta.25"

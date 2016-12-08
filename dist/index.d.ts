@@ -13,6 +13,6 @@ export declare type Creator = (observer: Observer) => Unsubscribe;
 export declare type Next = (value: any) => void;
 export declare type Listener = Observer | Next;
 export declare type Unsubscribe = () => void;
-export declare type Subscription = {
+export interface Subscription {
     unsubscribe: Unsubscribe;
-};
+}

@@ -58,17 +58,16 @@ export interface Observable<T> {
   subscribe(listener: Observer | Next): Subscription;
 }
 
-// TODO: what's the difference between a type and an interface?
-// (TS only lets you extend and interface)
 export interface Observer {
   next: Next,
 }
 
 export type Creator = (observer: Observer) => Unsubscribe;
+
 export type Next = (value: any) => void;
 export type Listener = Observer | Next;
 
 export type Unsubscribe = () => void;
-export type Subscription = {
+export interface Subscription {
   unsubscribe: Unsubscribe,
 }

@@ -4,3 +4,5 @@ npm-debug.log
 *.pyc
 *.js.map
 **/dist/**/__tests__/**
+coverage/**
+.nyc_output/**

@@ -75,14 +75,14 @@ var $observable = (
 )();
 
 class IndefiniteObservable {
-    constructor(creator) {
-        this._creator = creator;
+    constructor(connect) {
+        this._connect = connect;
     }
     subscribe(observerOrNext) {
         const observer = wrapWithObserver(observerOrNext);
-        let unsubscribe = this._creator(observer);
+        const disconnect = this._connect(observer);
         return {
-            unsubscribe,
+            unsubscribe: disconnect,
         };
     }
     /**

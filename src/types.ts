@@ -15,19 +15,20 @@
  */
 
 export interface Observable<T> {
-  subscribe(listener: Observer<T> | Channel<T>): Subscription;
+  subscribe(observerOrNext: ObserverOrNext<T>): Subscription;
 }
 
 export interface Observer<T> {
-  next: Channel<T>,
+  next: NextChannel<T>,
 }
 
-export type Creator<T> = (observer: Observer<T>) => Unsubscribe;
+export type Connect<T> = (observer: Observer<T>) => Disconnect;
+export type Disconnect = () => void;
 
-export type Channel<T> = (value: T) => void;
-export type ObserverOrNext<T> = Observer<T> | Channel<T>;
+export type NextChannel<T> = (value: T) => void;
+export type ObserverOrNext<T> = Observer<T> | NextChannel<T>;
 
 export type Unsubscribe = () => void;
-export interface Subscription {
+export type Subscription = {
   unsubscribe: Unsubscribe,
 }

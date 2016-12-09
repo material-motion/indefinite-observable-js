@@ -15,7 +15,7 @@
  */
 
 import {
-  Channel,
+  NextChannel,
   Observer,
   ObserverOrNext,
 } from './types';
@@ -32,7 +32,7 @@ export default function wrapWithObserver<T>(listener: ObserverOrNext<T>): Observ
 
   } else {
     return {
-      next: (listener as Channel<T>)
+      next: (listener as NextChannel<T>)
     };
   }
 }

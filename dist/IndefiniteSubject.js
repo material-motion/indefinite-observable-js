@@ -19,7 +19,7 @@ const wrapWithObserver_1 = require("./wrapWithObserver");
 class IndefiniteSubject {
     constructor() {
         // Keep track of all the observers who have subscribed, so we can notify them
-        // when we get new values.
+        // when we get new values.  Note: JavaScript's Set collection is ordered.
         this._observers = new Set();
         this._hasStarted = false;
     }

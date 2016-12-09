@@ -27,7 +27,7 @@ import {
 
 export default class IndefiniteSubject<T> implements Observable<T>, Observer<T> {
   // Keep track of all the observers who have subscribed, so we can notify them
-  // when we get new values.
+  // when we get new values.  Note: JavaScript's Set collection is ordered.
   _observers: Set<Observer<T>> = new Set();
   _lastValue: T;
   _hasStarted: boolean = false;

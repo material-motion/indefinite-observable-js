@@ -14,15 +14,16 @@
  *  under the License.
  */
 export interface Observable<T> {
-    subscribe(listener: Observer<T> | Channel<T>): Subscription;
+    subscribe(observerOrNext: ObserverOrNext<T>): Subscription;
 }
 export interface Observer<T> {
-    next: Channel<T>;
+    next: NextChannel<T>;
 }
-export declare type Creator<T> = (observer: Observer<T>) => Unsubscribe;
-export declare type Channel<T> = (value: T) => void;
-export declare type ObserverOrNext<T> = Observer<T> | Channel<T>;
+export declare type Connect<T> = (observer: Observer<T>) => Disconnect;
+export declare type Disconnect = () => void;
+export declare type NextChannel<T> = (value: T) => void;
+export declare type ObserverOrNext<T> = Observer<T> | NextChannel<T>;
 export declare type Unsubscribe = () => void;
-export interface Subscription {
+export declare type Subscription = {
     unsubscribe: Unsubscribe;
-}
+};

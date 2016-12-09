@@ -5,7 +5,7 @@
     "start": "node ./devServer.js",
     "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
     "lint": "$( yarn bin )/tslint -c tslint.json --project tsconfig.json",
-    "test": "yarn run lint; yarn run build; $( yarn bin)/tsc --project ./tsconfig.tests.json; $( yarn bin )/mocha **/__tests__/**.js",
+    "test": "yarn run lint; yarn run build; $( yarn bin )/tsc --project ./tsconfig.tests.json; $( yarn bin )/mocha **/__tests__/**.js",
     "build": "yarn run clean; $( yarn bin )/tsc; node ./build.js",
     "prepublish": "yarn run build"
   },

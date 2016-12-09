@@ -3,9 +3,10 @@
   "version": "0.2.0",
   "scripts": {
     "start": "node ./devServer.js",
-    "test": "$( yarn bin )/karma start",
     "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
     "lint": "$( yarn bin )/tslint -c tslint.json --project tsconfig.json",
+    "test": "$( yarn bin )/karma start",
+    "ci": "yarn run lint; yarn run build; $( yarn bin)/tsc --project ./tsconfig.tests.json; yarn run test -- --single-run",
     "build": "yarn run clean; $( yarn bin )/tsc; node ./build.js",
     "prepublish": "yarn run build"
   },
@@ -22,19 +23,16 @@
     "karma-firefox-launcher": "1.0.0",
     "karma-mocha": "1.2.0",
     "karma-safari-launcher": "1.0.0",
-    "karma-webpack": "1.8.0",
     "mocha": "3.1.1",
     "mocha-sugar-free": "1.3.1",
     "pre-commit": "1.1.3",
     "pundle-dev": "1.1.11",
     "sinon": "2.0.0-pre.3",
     "sinon-chai": "2.8.0",
-    "ts-loader": "0.9.0",
     "tsickle": "0.2.0",
     "tslint": "4.0.2",
     "typescript": "2.1.4",
-    "typescript-pundle": "1.0.1",
-    "webpack": "2.1.0-beta.25"
+    "typescript-pundle": "1.0.1"
   },
   "pre-commit": [
     "build"

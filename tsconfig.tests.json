@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["**/*.test.*"],
+  "exclude": [],
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strictNullChecks": false
+  }
+}

@@ -12,28 +12,11 @@ module.exports = function(config) {
       },
     },
     files: [
-      '**/src/**/__tests__/**',
+      '**/dist/**/__tests__/**',
     ],
     exclude: [
       '**/*.map',
     ],
-    preprocessors: {
-      '**/*.ts': ['webpack'],
-      '**/*.js': ['webpack'],
-    },
-    webpack: {
-      devtool: 'eval',
-      resolve: {
-        extensions: ['.js', '.ts'],
-      },
-      module: {
-        loaders: [
-          {
-            test: /\.tsx?$/, loader: 'ts-loader?transpileOnly=true',
-          },
-        ],
-      },
-    },
     mime: {
       'text/x-typescript': ['ts', 'tsx'],
     },

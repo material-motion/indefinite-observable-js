@@ -15,7 +15,6 @@
  */
 
 import {
-  NextChannel,
   Observer,
   ObserverOrNext,
 } from './types';
@@ -27,12 +26,12 @@ import {
 // anonymous function, you get back that anonymous function wrapped in an
 // observer.
 export default function wrapWithObserver<T>(listener: ObserverOrNext<T>): Observer<T> {
-  if ((listener as Observer<T>).next) {
-    return (listener as Observer<T>);
+  if (typeof listener === 'function') {
+    return {
+      next: listener
+    };
 
   } else {
-    return {
-      next: (listener as NextChannel<T>)
-    };
+    return listener;
   }
 }

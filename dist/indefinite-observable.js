@@ -128,13 +128,13 @@ class IndefiniteSubject {
 }
 
 function wrapWithObserver(listener) {
-    if (listener.next) {
-        return listener;
-    }
-    else {
+    if (typeof listener === 'function') {
         return {
             next: listener
         };
+    }
+    else {
+        return listener;
     }
 }
 

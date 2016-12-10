@@ -21,13 +21,13 @@
 // anonymous function, you get back that anonymous function wrapped in an
 // observer.
 function wrapWithObserver(listener) {
-    if (listener.next) {
-        return listener;
-    }
-    else {
+    if (typeof listener === 'function') {
         return {
             next: listener
         };
+    }
+    else {
+        return listener;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

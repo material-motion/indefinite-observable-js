@@ -24,7 +24,7 @@ const moveEvent$ = new IndefiniteObservable(
 
     // Return a function that will perform any necessary clean up when the
     // observable is unsubscribed from.
-    return function unsubscribe() {
+    return () => {
       element.removeEventListener('pointermove', observer.next);
     }
   }

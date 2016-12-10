@@ -130,6 +130,16 @@ describe('IndefiniteObservable',
       }
     );
 
+    it(`doesn't forward unsubscribe arguments to disconnect`,
+      () => {
+        const subscription = stream.subscribe(listener1);
+        (subscription.unsubscribe as any)(1);
+
+        expect(disconnect).to.have.been.calledOnce;
+        expect(disconnect).not.to.have.been.calledWith(1);
+      }
+    );
+
     it(`should only allow each subscription to be unsubscribed once`,
       () => {
         const subscription = stream.subscribe(listener1);

@@ -37,13 +37,19 @@ export default class IndefiniteObservable<T> implements Observable<T> {
      // anonymous function or wrapped in an object (the observer).  Since
      // `connect` always expects to receive an observer, wrap any loose
      // functions in an object.
-
     const observer = wrapWithObserver<T>(observerOrNext);
 
     const disconnect = this._connect(observer);
 
+    let closed = false;
+
     return {
-      unsubscribe: disconnect,
+      unsubscribe() {
+        if (!closed) {
+          closed = true;
+          disconnect();
+        }
+      }
     };
   }
 

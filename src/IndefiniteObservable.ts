@@ -20,6 +20,7 @@ import wrapWithObserver from './wrapWithObserver';
 
 import {
   Connect,
+  Disconnect,
   Observable,
   ObserverOrNext,
   Subscription,
@@ -66,15 +67,13 @@ export default class IndefiniteObservable<T> implements Observable<T> {
      // functions in an object.
     const observer = wrapWithObserver<T>(observerOrNext);
 
-    const disconnect = this._connect(observer);
-
-    let closed = false;
+    let disconnect: Disconnect | undefined = this._connect(observer);
 
     return {
       unsubscribe() {
-        if (!closed) {
-          closed = true;
+        if (disconnect) {
           disconnect();
+          disconnect = undefined;
         }
       }
     };

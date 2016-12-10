@@ -104,5 +104,18 @@ describe('IndefiniteSubject',
         expect(listener1).to.have.been.calledWith(7);
       }
     );
+
+    it(`should identify itself as an adherent of the TC39 observable proposal`,
+      () => {
+        // According to the TC39 spec, if Symbol is defined, `this` should be
+        // returned by stream[Symbol.observable]().  Otherwise, the key is
+        // '@@observable'.
+        const $$observable = typeof Symbol !== 'undefined'
+          ? (Symbol as any).observable
+          : '@@observable';
+
+        expect(subject[$$observable]()).to.equal(subject);
+      }
+    );
   }
 );

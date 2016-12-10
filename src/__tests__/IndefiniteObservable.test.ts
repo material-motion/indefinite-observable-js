@@ -23,7 +23,7 @@ import {
 } from 'mocha-sugar-free';
 
 import {
-  spy,
+  stub,
 } from 'sinon';
 
 import IndefiniteObservable from '../IndefiniteObservable';
@@ -37,7 +37,160 @@ require('chai').use(
 
 describe('IndefiniteObservable',
   () => {
-    // Must do something with IndefiniteObservable to get test coverage for it.
-    IndefiniteObservable.toString();
+    let next;
+    let stream;
+    let listener1;
+    let listener2;
+    let disconnect;
+
+    beforeEach(
+      () => {
+        stream = new IndefiniteObservable(
+          observer => {
+            next = (value) => {
+              observer.next(value);
+            }
+
+            return disconnect;
+          }
+        );
+
+        listener1 = stub();
+        listener2 = stub();
+        disconnect = stub();
+      }
+    );
+
+    it(`should not call a subscriber until next has been called`,
+      () => {
+        stream.subscribe(listener1);
+        expect(listener1).not.to.have.been.called;
+      }
+    );
+
+    it(`should forward values from connect to a subscriber`,
+      () => {
+        stream.subscribe(listener1);
+
+        next(2);
+
+        expect(listener1).to.have.been.calledWith(2);
+
+        next(3);
+
+        expect(listener1).to.have.been.calledWith(3);
+      }
+    );
+
+    it(`should connect each subscriber independently`,
+      () => {
+        let connect = stub().returns(disconnect);
+
+        let spiedStream = new IndefiniteObservable(connect);
+
+        spiedStream.subscribe(listener1);
+        spiedStream.subscribe(listener2);
+
+        expect(connect).to.have.been.calledTwice;
+      }
+    );
+
+    // This is the test that led to https://github.com/material-motion/indefinite-observable-js/commit/26a7963a3e353e9ff83ea7b26a8beed46ad6e15d
+    it(`should send values to each subscriber independently`,
+      () => {
+        let counter = 0;
+
+        const random$ = new IndefiniteObservable(
+          (observer) => {
+            counter++;
+            observer.next(counter);
+
+            return disconnect;
+          }
+        );
+
+        random$.subscribe(listener1);
+        random$.subscribe(listener2);
+
+        const value1 = listener1.lastCall.args[0];
+        const value2 = listener2.lastCall.args[0];
+
+        expect(listener1).to.have.been.called;
+        expect(listener2).to.have.been.called;
+        expect(value1).not.to.equal(value2);
+      }
+    );
+
+    it(`should disconnect observers from events when unsubscribe is called`,
+      () => {
+        const subscription = stream.subscribe(listener1);
+        subscription.unsubscribe();
+
+        expect(disconnect).to.have.been.calledOnce;
+      }
+    );
+
+    it(`should only allow each subscription to be unsubscribed once`,
+      () => {
+        const subscription = stream.subscribe(listener1);
+        subscription.unsubscribe();
+        subscription.unsubscribe();
+
+        expect(disconnect).to.have.been.calledOnce;
+      }
+    );
+
+    it(`should accept an observer or an anonymous function`,
+      () => {
+        stream.subscribe({
+          next: listener1
+        });
+
+        next(7);
+
+        expect(listener1).to.have.been.calledWith(7);
+      }
+    );
+
+    it(`should allow an observer to have arbitrary channels`,
+      () => {
+        let channel1;
+        let channel2;
+
+        const multichannelStream = new IndefiniteObservable(
+          (observer: any) => {
+            channel1 = observer.channel1;
+            channel2 = observer.channel2;
+
+            return disconnect;
+          }
+        );
+
+        multichannelStream.subscribe({
+          channel1: listener1,
+          channel2: listener2,
+        } as any);
+
+        channel1(5);
+        channel2(7);
+
+        expect(listener1).to.have.been.calledWith(5);
+        expect(listener2).to.have.been.calledWith(7);
+      }
+    );
+
+    it(`should identify itself as an adherent of the TC39 observable proposal`,
+      () => {
+        // According to the TC39 spec, if Symbol is defined, `this` should be
+        // returned by stream[Symbol.observable]().  Otherwise, the key is
+        // '@@observable'.
+        const $$observable = typeof Symbol !== 'undefined'
+          ? (Symbol as any).observable
+          : '@@observable';
+
+        expect(stream[$$observable]()).to.equal(stream);
+      }
+    );
   }
 );
+

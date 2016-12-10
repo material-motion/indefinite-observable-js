@@ -31,4 +31,4 @@ export type ObserverOrNext<T> = Observer<T> | NextChannel<T>;
 export type Unsubscribe = () => void;
 export type Subscription = {
   unsubscribe: Unsubscribe,
-}
+};

@@ -53,13 +53,12 @@ class IndefiniteObservable {
         // `connect` always expects to receive an observer, wrap any loose
         // functions in an object.
         const observer = wrapWithObserver_1.default(observerOrNext);
-        const disconnect = this._connect(observer);
-        let closed = false;
+        let disconnect = this._connect(observer);
         return {
             unsubscribe() {
-                if (!closed) {
-                    closed = true;
+                if (disconnect) {
                     disconnect();
+                    disconnect = undefined;
                 }
             }
         };

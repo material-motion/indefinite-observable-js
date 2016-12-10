@@ -74,10 +74,37 @@ var $observable = (
   }
 )();
 
+/**
+ * Observable is a standard interface that's useful for modeling multiple,
+ * asynchronous events.
+ *
+ * IndefiniteObservable is a minimalist implementation of a subset of the TC39
+ * Observable proposal.  It is indefinite because it will never call `complete`
+ * or `error` on the provided observer.
+ */
 class IndefiniteObservable {
+    /**
+     * The provided function should receive an observer and connect that
+     * observer's `next` method to an event source (for instance,
+     * `element.addEventListener('click', observer.next)`).
+     *
+     * It must return a function that will disconnect the observer from the event
+     * source.
+     */
     constructor(connect) {
         this._connect = connect;
     }
+    /**
+     * `subscribe` uses the function supplied to the constructor to connect an
+     * observer to an event source.  Each observer is connected independently:
+     * each call to `subscribe` calls `connect` with the new observer.
+     *
+     * To disconnect the observer from the event source, call `unsubscribe` on the
+     * returned subscription.
+     *
+     * Note: `subscribe` accepts either a function or an object with a
+     * next method.
+     */
     subscribe(observerOrNext) {
         const observer = wrapWithObserver(observerOrNext);
         const disconnect = this._connect(observer);
@@ -101,16 +128,37 @@ class IndefiniteObservable {
     }
 }
 
+/**
+ * An IndefiniteSubject is both an Observer and an Observable.  Whenever it
+ * receives a value on `next`, it forwards that value to any subscribed
+ * observers.
+ *
+ * IndefiniteSubject is a multicast Observable; it remembers the most recent
+ * value dispatched and passes it to any new subscriber.
+ */
 class IndefiniteSubject {
     constructor() {
         this._observers = new Set();
         this._hasStarted = false;
     }
+    /**
+     * Passes the supplied value to any currently-subscribed observers.  If an
+     * observer `subscribe`s before `next` is called again, it will immediately
+     * receive `value`.
+     */
     next(value) {
         this._hasStarted = true;
         this._lastValue = value;
         this._observers.forEach((observer) => observer.next(value));
     }
+    /**
+     * `subscribe` accepts either a function or an object with a next method.
+     * `subject.next` will forward any value it receives to the function or method
+     * provided here.
+     *
+     * Call the returned `unsubscribe` method to stop receiving values on this
+     * particular observer.
+     */
     subscribe(observerOrNext) {
         const observer = wrapWithObserver(observerOrNext);
         this._observers.add(observer);

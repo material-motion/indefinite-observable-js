@@ -16,6 +16,14 @@
 "use strict";
 const symbol_observable_1 = require("symbol-observable");
 const wrapWithObserver_1 = require("./wrapWithObserver");
+/**
+ * An IndefiniteSubject is both an Observer and an Observable.  Whenever it
+ * receives a value on `next`, it forwards that value to any subscribed
+ * observers.
+ *
+ * IndefiniteSubject is a multicast Observable; it remembers the most recent
+ * value dispatched and passes it to any new subscriber.
+ */
 class IndefiniteSubject {
     constructor() {
         // Keep track of all the observers who have subscribed, so we can notify them
@@ -23,6 +31,11 @@ class IndefiniteSubject {
         this._observers = new Set();
         this._hasStarted = false;
     }
+    /**
+     * Passes the supplied value to any currently-subscribed observers.  If an
+     * observer `subscribe`s before `next` is called again, it will immediately
+     * receive `value`.
+     */
     next(value) {
         this._hasStarted = true;
         this._lastValue = value;
@@ -31,6 +44,14 @@ class IndefiniteSubject {
         // dispatch.
         this._observers.forEach((observer) => observer.next(value));
     }
+    /**
+     * `subscribe` accepts either a function or an object with a next method.
+     * `subject.next` will forward any value it receives to the function or method
+     * provided here.
+     *
+     * Call the returned `unsubscribe` method to stop receiving values on this
+     * particular observer.
+     */
     subscribe(observerOrNext) {
         const observer = wrapWithObserver_1.default(observerOrNext);
         this._observers.add(observer);

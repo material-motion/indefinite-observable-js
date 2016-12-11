@@ -1,0 +1,4 @@
+dir: ./dist
+packageJson: ./package.json
+branches:
+  - add-to-doclets

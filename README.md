@@ -42,6 +42,8 @@ const unsubscribe = moveEvent$.subscribe({
 });
 ```
 
+Learn more about [How Indefinite Observables work](https://material-motion.github.io/material-motion/documentation/L4/IndefiniteObservable).
+
 ## Installation ##
 
 ```

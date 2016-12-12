@@ -64,8 +64,11 @@ writeFileSync(
     /symbol_observable_\d\.default/g,
     '$$observable'
   ).replace(
-    /wrapWithObserver_\d\.default/g,
-    'wrapWithObserver'
+    /wrapWithObserver/g,
+    '_wrapWithObserver'
+  ).replace(
+    /_wrapWithObserver_\d\.default/g,
+    '_wrapWithObserver'
   ).replace(
     /Object\.defineProperty\(exports, "__esModule", \{ value: true \}\);/g,
     ''
@@ -75,5 +78,12 @@ writeFileSync(
   ).replace(
     /\n\n+/g,
     '\n\n'
+
+  // Use 2 spaces instead of 4 in the TypeScript output to keep comments wrapped
+  // to 80 chars.  If we ever try to use spaces for alignment (independent of
+  // indentation), this regex will need to be revisited.
+  ).replace(
+    /    /g,
+    '  '
   )
 );

@@ -43,34 +43,34 @@
 
 var $observable = (
   () => {
-    var root;
+  var root;
 
-    if (typeof self !== 'undefined') {
-      root = self;
-    } else if (typeof window !== 'undefined') {
-      root = window;
-    } else if (typeof global !== 'undefined') {
-      root = global;
-    } else if (typeof module !== 'undefined') {
-      root = module;
+  if (typeof self !== 'undefined') {
+    root = self;
+  } else if (typeof window !== 'undefined') {
+    root = window;
+  } else if (typeof global !== 'undefined') {
+    root = global;
+  } else if (typeof module !== 'undefined') {
+    root = module;
+  } else {
+    root = Function('return this')();
+  }
+
+  var Symbol = root.Symbol;
+
+  if (typeof Symbol === 'function') {
+    if (Symbol.observable) {
+    result = Symbol.observable;
     } else {
-      root = Function('return this')();
+    result = Symbol('observable');
+    Symbol.observable = result;
     }
+  } else {
+    result = '@@observable';
+  }
 
-    var Symbol = root.Symbol;
-
-    if (typeof Symbol === 'function') {
-      if (Symbol.observable) {
-        result = Symbol.observable;
-      } else {
-        result = Symbol('observable');
-        Symbol.observable = result;
-      }
-    } else {
-      result = '@@observable';
-    }
-
-    return result;
+  return result;
   }
 )();
 
@@ -83,48 +83,48 @@ var $observable = (
  * or `error` on the provided observer.
  */
 class IndefiniteObservable {
-    /**
-     * The provided function should receive an observer and connect that
-     * observer's `next` method to an event source (for instance,
-     * `element.addEventListener('click', observer.next)`).
-     *
-     * It must return a function that will disconnect the observer from the event
-     * source.
-     */
-    constructor(connect) {
-        this._connect = connect;
-    }
-    /**
-     * `subscribe` uses the function supplied to the constructor to connect an
-     * observer to an event source.  Each observer is connected independently:
-     * each call to `subscribe` calls `connect` with the new observer.
-     *
-     * To disconnect the observer from the event source, call `unsubscribe` on the
-     * returned subscription.
-     *
-     * Note: `subscribe` accepts either a function or an object with a
-     * next method.
-     */
-    subscribe(observerOrNext) {
-        const observer = wrapWithObserver(observerOrNext);
-        let disconnect = this._connect(observer);
-        return {
-            unsubscribe() {
-                if (disconnect) {
-                    disconnect();
-                    disconnect = undefined;
-                }
-            }
-        };
-    }
-    /**
-     * Tells other libraries that know about observables that we are one.
-     *
-     * https://github.com/tc39/proposal-observable#observable
-     */
-    [$observable]() {
-        return this;
-    }
+  /**
+   * The provided function should receive an observer and connect that
+   * observer's `next` method to an event source (for instance,
+   * `element.addEventListener('click', observer.next)`).
+   *
+   * It must return a function that will disconnect the observer from the event
+   * source.
+   */
+  constructor(connect) {
+    this._connect = connect;
+  }
+  /**
+   * `subscribe` uses the function supplied to the constructor to connect an
+   * observer to an event source.  Each observer is connected independently:
+   * each call to `subscribe` calls `connect` with the new observer.
+   *
+   * To disconnect the observer from the event source, call `unsubscribe` on the
+   * returned subscription.
+   *
+   * Note: `subscribe` accepts either a function or an object with a
+   * next method.
+   */
+  subscribe(observerOrNext) {
+    const observer = _wrapWithObserver(observerOrNext);
+    let disconnect = this._connect(observer);
+    return {
+      unsubscribe() {
+        if (disconnect) {
+          disconnect();
+          disconnect = undefined;
+        }
+      }
+    };
+  }
+  /**
+   * Tells other libraries that know about observables that we are one.
+   *
+   * https://github.com/tc39/proposal-observable#observable
+   */
+  [$observable]() {
+    return this;
+  }
 }
 
 /**
@@ -136,58 +136,58 @@ class IndefiniteObservable {
  * value dispatched and passes it to any new subscriber.
  */
 class IndefiniteSubject {
-    constructor() {
-        this._observers = new Set();
-        this._hasStarted = false;
+  constructor() {
+    this._observers = new Set();
+    this._hasStarted = false;
+  }
+  /**
+   * Passes the supplied value to any currently-subscribed observers.  If an
+   * observer `subscribe`s before `next` is called again, it will immediately
+   * receive `value`.
+   */
+  next(value) {
+    this._hasStarted = true;
+    this._lastValue = value;
+    this._observers.forEach((observer) => observer.next(value));
+  }
+  /**
+   * `subscribe` accepts either a function or an object with a next method.
+   * `subject.next` will forward any value it receives to the function or method
+   * provided here.
+   *
+   * Call the returned `unsubscribe` method to stop receiving values on this
+   * particular observer.
+   */
+  subscribe(observerOrNext) {
+    const observer = _wrapWithObserver(observerOrNext);
+    this._observers.add(observer);
+    if (this._hasStarted) {
+      observer.next(this._lastValue);
     }
-    /**
-     * Passes the supplied value to any currently-subscribed observers.  If an
-     * observer `subscribe`s before `next` is called again, it will immediately
-     * receive `value`.
-     */
-    next(value) {
-        this._hasStarted = true;
-        this._lastValue = value;
-        this._observers.forEach((observer) => observer.next(value));
-    }
-    /**
-     * `subscribe` accepts either a function or an object with a next method.
-     * `subject.next` will forward any value it receives to the function or method
-     * provided here.
-     *
-     * Call the returned `unsubscribe` method to stop receiving values on this
-     * particular observer.
-     */
-    subscribe(observerOrNext) {
-        const observer = wrapWithObserver(observerOrNext);
-        this._observers.add(observer);
-        if (this._hasStarted) {
-            observer.next(this._lastValue);
-        }
-        return {
-            unsubscribe: () => {
-                this._observers.delete(observer);
-            }
-        };
-    }
-    /**
-     * Tells other libraries that know about observables that we are one.
-     *
-     * https://github.com/tc39/proposal-observable#observable
-     */
-    [$observable]() {
-        return this;
-    }
+    return {
+      unsubscribe: () => {
+        this._observers.delete(observer);
+      }
+    };
+  }
+  /**
+   * Tells other libraries that know about observables that we are one.
+   *
+   * https://github.com/tc39/proposal-observable#observable
+   */
+  [$observable]() {
+    return this;
+  }
 }
 
-function wrapWithObserver(listener) {
-    if (typeof listener === 'function') {
-        return {
-            next: listener
-        };
-    }
-    else {
-        return listener;
-    }
+function _wrapWithObserver(listener) {
+  if (typeof listener === 'function') {
+    return {
+      next: listener
+    };
+  }
+  else {
+    return listener;
+  }
 }
 

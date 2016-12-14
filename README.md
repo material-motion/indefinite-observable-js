@@ -5,7 +5,7 @@
 
 ## Why? ##
 
-There are a lot of great Observable implementations, but they're baked into featureful libraries which contribute to both complexity and filesize.  We wanted the simplest-possible Observable implementation, with no operators, no fancy scheduling: [read the entire source](https://github.com/material-motion/indefinite-observable-js/blob/develop/src/IndefiniteObservable.ts) without scrolling.
+There are a lot of great Observable implementations, but they're baked into featureful libraries which contribute to both complexity and filesize.  We wanted the simplest-possible Observable implementation, with no operators, no fancy scheduling.  The entire thing is basically [three statements in `subscribe`](https://github.com/material-motion/indefinite-observable-js/blob/develop/src/IndefiniteObservable.ts#L68-L72).
 
 Indefinite Observable is a subset of the [TC39 Observable proposal](https://tc39.github.io/proposal-observable/) that never `complete`s or `error`s.  It implements the [minimal-necessary functionality](https://en.wikipedia.org/wiki/You_aren't_gonna_need_it), but it should be completely interchangeable with the TC39 proposal for the subset that it does implement.
 
@@ -63,13 +63,15 @@ This library aims to be as simple as possible, so modifications will be rare.  R
 - bugs, or
 - remaining compatible with the subset of the Observable spec that we support.
 
-If you'd like to add operators, static methods, or other features, we invite you to depend upon us subclassing `IndefiniteObservable` in your own module.  In fact, that's how we add features too.
+If you'd like to add operators, static methods, or other features, we invite you to depend upon us subclassing `IndefiniteObservable` in your own module.  In fact, [that's how we add features too](https://github.com/material-motion/material-motion-js/blob/develop/packages/streams/src/MotionObservable.ts).
 
 Of course, we welcome improvements to the examples and documentation in this repo.
 
 ### Bundling ###
 
-Our source is available in 3 flavors: a TypeScript module, a JavaScript module, and a JavaScript bundle.  Any changes made to the first need to be reflected in the other two.  This should be handled for you automatically via a pre-commit hook.  If you need to bundle it independently, run
+Our source is available in 3 flavors: a TypeScript module, a JavaScript module, and a JavaScript bundle.  Any changes made to the first need to be reflected in the other two.  This should be handled for you automatically via a pre-commit hook.  If you have a clean working copy after committing, you're good.  If not, amend the commit with the new build before pushing.
+
+If you need to bundle it independently, run
 
 ```
 yarn run build

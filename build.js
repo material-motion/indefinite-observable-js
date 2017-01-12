@@ -37,7 +37,6 @@ const licenseText = `/** @license
 "use strict";`;
 
 const observableSource = readFileSync('./dist/IndefiniteObservable.js').toString();
-const subjectSource = readFileSync('./dist/IndefiniteSubject.js').toString();
 const wrapWithObserverSource = readFileSync('./dist/wrapWithObserver.js').toString();
 const symbolObservable = readFileSync('./third_party/symbol-observable/index.js').toString();
 
@@ -45,7 +44,6 @@ writeFileSync(
   './dist/indefinite-observable.js',
   licenseText + '\n' +[
     observableSource.replace(licenseText, ''),
-    subjectSource.replace(licenseText, ''),
     wrapWithObserverSource.replace(licenseText, ''),
   ].join('\n\n').replace(
     /const symbol_observable_\d = require\("symbol-observable"\);/,

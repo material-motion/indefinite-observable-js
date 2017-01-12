@@ -18,6 +18,3 @@ export * from './types';
 
 export * from './IndefiniteObservable';
 export { default as IndefiniteObservable } from './IndefiniteObservable';
-
-export * from './IndefiniteSubject';
-export { default as IndefiniteSubject } from './IndefiniteSubject';

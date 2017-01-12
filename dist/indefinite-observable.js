@@ -127,59 +127,6 @@ class IndefiniteObservable {
   }
 }
 
-/**
- * An IndefiniteSubject is both an Observer and an Observable.  Whenever it
- * receives a value on `next`, it forwards that value to any subscribed
- * observers.
- *
- * IndefiniteSubject is a multicast Observable; it remembers the most recent
- * value dispatched and passes it to any new subscriber.
- */
-class IndefiniteSubject {
-  constructor() {
-    this._observers = new Set();
-    this._hasStarted = false;
-  }
-  /**
-   * Passes the supplied value to any currently-subscribed observers.  If an
-   * observer `subscribe`s before `next` is called again, it will immediately
-   * receive `value`.
-   */
-  next(value) {
-    this._hasStarted = true;
-    this._lastValue = value;
-    this._observers.forEach((observer) => observer.next(value));
-  }
-  /**
-   * `subscribe` accepts either a function or an object with a next method.
-   * `subject.next` will forward any value it receives to the function or method
-   * provided here.
-   *
-   * Call the returned `unsubscribe` method to stop receiving values on this
-   * particular observer.
-   */
-  subscribe(observerOrNext) {
-    const observer = _wrapWithObserver(observerOrNext);
-    this._observers.add(observer);
-    if (this._hasStarted) {
-      observer.next(this._lastValue);
-    }
-    return {
-      unsubscribe: () => {
-        this._observers.delete(observer);
-      }
-    };
-  }
-  /**
-   * Tells other libraries that know about observables that we are one.
-   *
-   * https://github.com/tc39/proposal-observable#observable
-   */
-  [$observable]() {
-    return this;
-  }
-}
-
 function _wrapWithObserver(listener) {
   if (typeof listener === 'function') {
     return {

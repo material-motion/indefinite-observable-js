@@ -20,7 +20,4 @@ function __export(m) {
 __export(require("./IndefiniteObservable"));
 var IndefiniteObservable_1 = require("./IndefiniteObservable");
 exports.IndefiniteObservable = IndefiniteObservable_1.default;
-__export(require("./IndefiniteSubject"));
-var IndefiniteSubject_1 = require("./IndefiniteSubject");
-exports.IndefiniteSubject = IndefiniteSubject_1.default;
 //# sourceMappingURL=index.js.map

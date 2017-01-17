@@ -41,6 +41,7 @@ var $$observable = (
       root = Function('return this')();
     }
 
+    var result;
     var Symbol = root.Symbol;
 
     if (typeof Symbol === 'function') {

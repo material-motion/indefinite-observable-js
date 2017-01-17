@@ -40,38 +40,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 var $observable = (
   () => {
-  var root;
+    var root;
 
-  if (typeof self !== 'undefined') {
-    root = self;
-  } else if (typeof window !== 'undefined') {
-    root = window;
-  } else if (typeof global !== 'undefined') {
-    root = global;
-  } else if (typeof module !== 'undefined') {
-    root = module;
-  } else {
-    root = Function('return this')();
-  }
-
-  var result;
-  var Symbol = root.Symbol;
-
-  if (typeof Symbol === 'function') {
-    if (Symbol.observable) {
-    result = Symbol.observable;
+    if (typeof self !== 'undefined') {
+      root = self;
+    } else if (typeof window !== 'undefined') {
+      root = window;
+    } else if (typeof global !== 'undefined') {
+      root = global;
+    } else if (typeof module !== 'undefined') {
+      root = module;
     } else {
-    result = Symbol('observable');
-    Symbol.observable = result;
+      root = Function('return this')();
     }
-  } else {
-    result = '@@observable';
-  }
+    var result;
+    var Symbol = root.Symbol;
 
-  return result;
+    if (typeof Symbol === 'function') {
+      if (Symbol.observable) {
+        result = Symbol.observable;
+      } else {
+        result = Symbol('observable');
+        Symbol.observable = result;
+      }
+    } else {
+      result = '@@observable';
+    }
+
+    return result;
   }
 )();
 

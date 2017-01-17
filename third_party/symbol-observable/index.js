@@ -25,36 +25,38 @@
  * THE SOFTWARE.
  */
 
+// Using 4 spaces for indentation, to match TypeScript output.
 var $$observable = (
-  () => {
-    var root;
+    () => {
+        var root;
 
-    if (typeof self !== 'undefined') {
-      root = self;
-    } else if (typeof window !== 'undefined') {
-      root = window;
-    } else if (typeof global !== 'undefined') {
-      root = global;
-    } else if (typeof module !== 'undefined') {
-      root = module;
-    } else {
-      root = Function('return this')();
+        if (typeof self !== 'undefined') {
+            root = self;
+        } else if (typeof window !== 'undefined') {
+            root = window;
+        } else if (typeof global !== 'undefined') {
+            root = global;
+        } else if (typeof module !== 'undefined') {
+            root = module;
+        } else {
+            root = Function('return this')();
+        }
+
+        // symbol-observable/ponyfill.js
+        var result;
+        var Symbol = root.Symbol;
+
+        if (typeof Symbol === 'function') {
+            if (Symbol.observable) {
+                result = Symbol.observable;
+            } else {
+                result = Symbol('observable');
+                Symbol.observable = result;
+            }
+        } else {
+            result = '@@observable';
+        }
+
+        return result;
     }
-
-    var result;
-    var Symbol = root.Symbol;
-
-    if (typeof Symbol === 'function') {
-      if (Symbol.observable) {
-        result = Symbol.observable;
-      } else {
-        result = Symbol('observable');
-        Symbol.observable = result;
-      }
-    } else {
-      result = '@@observable';
-    }
-
-    return result;
-  }
 )();

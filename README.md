@@ -53,7 +53,7 @@ yarn add indefinite-observable
 or include as a script tag:
 
 ```
-<script src = 'https://unpkg.com/indefinite-observable/dist/indefinite-observable.js'></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/indefinite-observable/1.0.1/indefinite-observable.js"></script>
 ```
 
 ## Contributing ##

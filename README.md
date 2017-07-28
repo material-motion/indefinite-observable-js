@@ -42,7 +42,7 @@ const unsubscribe = moveEvent$.subscribe({
 });
 ```
 
-Learn more about [How Indefinite Observables work](https://material-motion.github.io/material-motion/documentation/L4/IndefiniteObservable).
+Learn more about [How Indefinite Observables work](https://material-motion.github.io/material-motion/documentation/IndefiniteObservable).
 
 ## Installation ##
 
@@ -63,7 +63,7 @@ This library aims to be as simple as possible, so modifications will be rare.  R
 - bugs, or
 - remaining compatible with the subset of the Observable spec that we support.
 
-If you'd like to add operators, static methods, or other features, we invite you to depend upon us subclassing `IndefiniteObservable` in your own module.  In fact, [that's how we add features too](https://github.com/material-motion/material-motion-js/blob/develop/packages/streams/src/MotionObservable.ts).
+If you'd like to add operators, static methods, or other features, we invite you to depend upon us subclassing `IndefiniteObservable` in your own module.  In fact, [that's how we add features too](https://github.com/material-motion/material-motion-js/blob/develop/packages/core/src/observables/MotionObservable.ts).
 
 Of course, we welcome improvements to the examples and documentation in this repo.
 

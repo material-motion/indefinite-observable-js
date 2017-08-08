@@ -1,6 +1,6 @@
 # Indefinite Observable ##
 
-[![Build Status](https://travis-ci.org/material-motion/indefinite-observable-js.svg?branch=develop)](https://travis-ci.org/material-motion/indefinite-observable-js)
+[![Build Status](https://img.shields.io/circleci/project/github/material-motion/indefinite-observable-js/develop.svg)](https://circleci.com/gh/material-motion/indefinite-observable-js/)
 [![codecov](https://codecov.io/gh/material-motion/indefinite-observable-js/branch/develop/graph/badge.svg)](https://codecov.io/gh/material-motion/indefinite-observable-js)
 
 ## Why? ##

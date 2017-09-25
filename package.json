@@ -4,11 +4,11 @@
   "scripts": {
     "start": "node ./devServer.js",
     "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
-    "lint": "$( yarn bin )/tslint -c tslint.json --project tsconfig.json",
-    "pretest": "yarn run lint; yarn run build; $( yarn bin )/tsc --project ./tsconfig.tests.json",
-    "test": "$( yarn bin )/nyc $( yarn bin )/mocha ./dist/**/__tests__/**.js",
-    "posttest": "$( yarn bin )/nyc report --reporter=json && $( yarn bin )/codecov -f coverage/*.json",
-    "build": "yarn run clean; $( yarn bin )/tsc; node ./build.js",
+    "lint": "tslint -c tslint.json --project tsconfig.json",
+    "pretest": "yarn run lint; yarn run build; tsc --project ./tsconfig.tests.json",
+    "test": "nyc mocha ./dist/**/__tests__/**.js",
+    "posttest": "nyc report --reporter=json && codecov -f coverage/*.json",
+    "build": "yarn run clean; tsc; node ./build.js",
     "prepublish": "yarn run build"
   },
   "main": "dist/index.js",

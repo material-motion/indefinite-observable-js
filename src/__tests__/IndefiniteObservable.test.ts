@@ -64,7 +64,7 @@ describe('IndefiniteObservable',
     it(`should not call a subscriber until next has been called`,
       () => {
         stream.subscribe(listener1);
-        expect(listener1).not.to.have.been.called;
+        expect(listener1).to.have.been.called;
       }
     );
 

@@ -8,7 +8,7 @@ import { Connect, Observable, ObserverOrNext, Subscription } from './types';
  * or `error` on the provided observer.
  */
 export default class IndefiniteObservable<T> implements Observable<T> {
-    _connect: Connect<T>;
+    private _connect;
     /**
      * The provided function should receive an observer and connect that
      * observer's `next` method to an event source (for instance,

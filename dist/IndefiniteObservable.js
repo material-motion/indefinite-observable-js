@@ -35,6 +35,7 @@ class IndefiniteObservable {
      */
     constructor(connect) {
         this._connect = connect;
+        debugger;
     }
     /**
      * `subscribe` uses the function supplied to the constructor to connect an

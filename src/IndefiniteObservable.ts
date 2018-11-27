@@ -35,7 +35,7 @@ import {
  * or `error` on the provided observer.
  */
 export default class IndefiniteObservable<T> implements Observable<T> {
-  _connect: Connect<T>;
+  private _connect: Connect<T>;
 
   /**
    * The provided function should receive an observer and connect that

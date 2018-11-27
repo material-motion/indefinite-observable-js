@@ -15,7 +15,9 @@
   "types": "dist/index.d.ts",
   "typescript:main": "src/index.ts",
   "dependencies": {
-    "symbol-observable": "1.0.4"
+    "mocha-junit-reporter": "^1.18.0",
+    "symbol-observable": "1.0.4",
+    "tslint-junit-formatter": "^5.1.0"
   },
   "devDependencies": {
     "chai": "3.5.0",

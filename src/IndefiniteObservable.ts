@@ -47,6 +47,7 @@ export default class IndefiniteObservable<T> implements Observable<T> {
    */
   constructor(connect: Connect<T>) {
     this._connect = connect;
+    debugger;
   }
 
   /**

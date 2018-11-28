@@ -1,1 +1,8 @@
 __tests__
+.*
+examples
+third_party
+build.js
+devServer.js
+tsconfig.tests.json
+tslint.json

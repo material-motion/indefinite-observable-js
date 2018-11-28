@@ -1,7 +1,7 @@
 # Indefinite Observable ##
 
-<!-- TODO: update version number before releasing -->
-![Current version:](https://img.shields.io/badge/v1.0.1:-222222.svg?logo=npm)
+<!-- TODO: update version number before releasing, here and in the script tag -->
+![Current version:](https://img.shields.io/badge/v1.0.2:-222222.svg?logo=npm)
 [![Test status](https://img.shields.io/circleci/project/github/material-motion/indefinite-observable-js/stable.svg?logo=circleci&label=Tests)](https://circleci.com/gh/material-motion/indefinite-observable-js/tree/stable)
 [![Code coverage](https://img.shields.io/codecov/c/github/material-motion/indefinite-observable-js/stable.svg?logo=codecov&logoColor=white&label=Coverage)](https://codecov.io/gh/material-motion/indefinite-observable-js/branch/stable)<br />
 ![HEAD:](https://img.shields.io/badge/HEAD:-222222.svg?logo=github&logoColor=white)

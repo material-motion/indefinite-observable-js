@@ -6,18 +6,24 @@
     "clean": "rm -rf ./dist/*; mkdir -p ./dist/",
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "pretest": "yarn run lint; yarn run build; tsc --project ./tsconfig.tests.json",
-    "test": "nyc mocha ./dist/**/__tests__/**.js",
+    "test": "nyc --require @std/esm mocha ./dist/**/__tests__/**.js",
     "posttest": "nyc report --reporter=json && codecov -f coverage/*.json",
-    "build": "yarn run clean; tsc; node ./build.js",
+    "build": "yarn run clean; tsc; rollup --config rollup.config.js",
     "prepublish": "yarn run build"
   },
-  "main": "dist/index.js",
+  "browser": "dist/indefinite-observable.bundle.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "typescript:main": "src/index.ts",
   "dependencies": {
     "symbol-observable": "1.2.0"
   },
+  "@std/esm": {
+    "mode": "all",
+    "cjs": true
+  },
   "devDependencies": {
+    "@std/esm": "^0.26.0",
     "chai": "3.5.0",
     "codecov": "^1.0.1",
     "mocha": "3.2.0",
@@ -26,12 +32,17 @@
     "nyc": "^10.0.0",
     "pre-commit": "1.1.3",
     "pundle-dev": "1.1.11",
+    "rollup": "^0.67.4",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-strip-code": "^0.2.6",
+    "rollup-plugin-typescript2": "^0.18.0",
     "sinon": "2.0.0-pre.3",
     "sinon-chai": "2.8.0",
     "tsickle": "0.2.0",
     "tslint": "4.0.2",
     "tslint-junit-formatter": "^5.1.0",
-    "typescript": "2.1.4",
+    "typescript": "3",
     "typescript-pundle": "1.0.1"
   },
   "pre-commit": [

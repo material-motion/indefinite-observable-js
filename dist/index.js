@@ -1,3 +1,4 @@
+"use strict";
 /** @license
  *  Copyright 2016 - present The Material Motion Authors. All Rights Reserved.
  *
@@ -13,11 +14,13 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-"use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
+Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./IndefiniteObservable"));
+var wrapWithObserver_1 = require("./wrapWithObserver");
+exports.wrapWithObserver = wrapWithObserver_1.wrapWithObserver;
 var IndefiniteObservable_1 = require("./IndefiniteObservable");
 exports.IndefiniteObservable = IndefiniteObservable_1.default;
 //# sourceMappingURL=index.js.map

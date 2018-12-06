@@ -19,13 +19,15 @@ import {
   ObserverOrNext,
 } from './types';
 
-// TypeScript is a pain to use with polymorphic types unless you wrap them in a
-// function that returns a single type.  So, that's what this is.
-//
-// If you give it an observer, you get back that observer.  If you give it an
-// anonymous function, you get back that anonymous function wrapped in an
-// observer.
-export default function wrapWithObserver<T>(listener: ObserverOrNext<T>): Observer<T> {
+/**
+ * TypeScript is a pain to use with polymorphic types unless you wrap them in a
+ * function that returns a single type.  So, that's what this is.
+ *
+ * If you give it an observer, you get back that observer.  If you give it an
+ * anonymous function, you get back that anonymous function wrapped in an
+ * observer.
+ */
+export function wrapWithObserver<T>(listener: ObserverOrNext<T>): Observer<T> {
   if (typeof listener === 'function') {
     return {
       next: listener
@@ -35,3 +37,4 @@ export default function wrapWithObserver<T>(listener: ObserverOrNext<T>): Observ
     return listener;
   }
 }
+export default wrapWithObserver;

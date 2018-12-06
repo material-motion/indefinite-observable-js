@@ -6,3 +6,4 @@ npm-debug.log
 **/dist/**/__tests__/**
 coverage/**
 .nyc_output/**
+.rpt2_cache/

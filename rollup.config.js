@@ -13,7 +13,30 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-export * from './IndefiniteObservable';
-export { wrapWithObserver } from './wrapWithObserver';
-export { default as IndefiniteObservable } from './IndefiniteObservable';
-//# sourceMappingURL=index.js.map
+
+import resolve from 'rollup-plugin-node-resolve';
+import typescript from 'rollup-plugin-typescript2';
+
+import {
+  renameSymbolObservable,
+  unifyLicenses,
+  addDefaultExport,
+} from './rollupPlugins';
+
+export default [
+  {
+    input: './src/index.ts',
+    output: {
+      file: './dist/indefinite-observable.bundle.js',
+      format: 'esm',
+    },
+    plugins: [
+      typescript(),
+      resolve(),
+      renameSymbolObservable(),
+      unifyLicenses(),
+      addDefaultExport('IndefiniteObservable'),
+    ],
+  },
+];
+

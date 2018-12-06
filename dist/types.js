@@ -1,3 +1,4 @@
+"use strict";
 /** @license
  *  Copyright 2016 - present The Material Motion Authors. All Rights Reserved.
  *
@@ -13,5 +14,5 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 //# sourceMappingURL=types.js.map

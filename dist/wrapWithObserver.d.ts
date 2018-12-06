@@ -14,4 +14,13 @@
  *  under the License.
  */
 import { Observer, ObserverOrNext } from './types';
-export default function wrapWithObserver<T>(listener: ObserverOrNext<T>): Observer<T>;
+/**
+ * TypeScript is a pain to use with polymorphic types unless you wrap them in a
+ * function that returns a single type.  So, that's what this is.
+ *
+ * If you give it an observer, you get back that observer.  If you give it an
+ * anonymous function, you get back that anonymous function wrapped in an
+ * observer.
+ */
+export declare function wrapWithObserver<T>(listener: ObserverOrNext<T>): Observer<T>;
+export default wrapWithObserver;

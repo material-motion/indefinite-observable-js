@@ -27,14 +27,14 @@ import {
 } from './types';
 
 /**
- * Observable is a standard interface that's useful for modeling multiple,
+ * `Observable` is a standard interface that's useful for modeling multiple,
  * asynchronous events.
  *
- * IndefiniteObservable is a minimalist implementation of a subset of the TC39
+ * `IndefiniteObservable` is a minimalist implementation of a subset of the TC39
  * Observable proposal.  It is indefinite because it will never call `complete`
  * or `error` on the provided observer.
  */
-export default class IndefiniteObservable<T> implements Observable<T> {
+export class IndefiniteObservable<T> implements Observable<T> {
   private _connect: Connect<T>;
 
   /**
@@ -88,3 +88,4 @@ export default class IndefiniteObservable<T> implements Observable<T> {
     return this;
   }
 }
+export default IndefiniteObservable;

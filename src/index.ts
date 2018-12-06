@@ -17,4 +17,5 @@
 export * from './types';
 
 export * from './IndefiniteObservable';
+export { wrapWithObserver } from './wrapWithObserver';
 export { default as IndefiniteObservable } from './IndefiniteObservable';

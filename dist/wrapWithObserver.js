@@ -1,3 +1,4 @@
+"use strict";
 /** @license
  *  Copyright 2016 - present The Material Motion Authors. All Rights Reserved.
  *
@@ -13,13 +14,15 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-"use strict";
-// TypeScript is a pain to use with polymorphic types unless you wrap them in a
-// function that returns a single type.  So, that's what this is.
-//
-// If you give it an observer, you get back that observer.  If you give it an
-// anonymous function, you get back that anonymous function wrapped in an
-// observer.
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * TypeScript is a pain to use with polymorphic types unless you wrap them in a
+ * function that returns a single type.  So, that's what this is.
+ *
+ * If you give it an observer, you get back that observer.  If you give it an
+ * anonymous function, you get back that anonymous function wrapped in an
+ * observer.
+ */
 function wrapWithObserver(listener) {
     if (typeof listener === 'function') {
         return {
@@ -30,6 +33,6 @@ function wrapWithObserver(listener) {
         return listener;
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.wrapWithObserver = wrapWithObserver;
 exports.default = wrapWithObserver;
 //# sourceMappingURL=wrapWithObserver.js.map

@@ -1,3 +1,4 @@
+"use strict";
 /** @license
  *  Copyright 2016 - present The Material Motion Authors. All Rights Reserved.
  *
@@ -13,14 +14,14 @@
  *  License for the specific language governing permissions and limitations
  *  under the License.
  */
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const symbol_observable_1 = require("symbol-observable");
 const wrapWithObserver_1 = require("./wrapWithObserver");
 /**
- * Observable is a standard interface that's useful for modeling multiple,
+ * `Observable` is a standard interface that's useful for modeling multiple,
  * asynchronous events.
  *
- * IndefiniteObservable is a minimalist implementation of a subset of the TC39
+ * `IndefiniteObservable` is a minimalist implementation of a subset of the TC39
  * Observable proposal.  It is indefinite because it will never call `complete`
  * or `error` on the provided observer.
  */
@@ -72,6 +73,6 @@ class IndefiniteObservable {
         return this;
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.IndefiniteObservable = IndefiniteObservable;
 exports.default = IndefiniteObservable;
 //# sourceMappingURL=IndefiniteObservable.js.map

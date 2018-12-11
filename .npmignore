@@ -1,8 +1,10 @@
 __tests__
 .*
+coverage
 examples
 third_party
 build.js
 devServer.js
 tsconfig.tests.json
+rollup.config.js
 tslint.json

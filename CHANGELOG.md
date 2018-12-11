@@ -1,5 +1,12 @@
 # Changelog #
 
+## v2.0.0 (2018-12-10) ##
+### Changes ###
+- Replaced `main` with `module` in `package.json`.  Both the `browser` and the `module` bundles use ES Modules.  We no longer distribute a CommonJS format.
+
+### Additions ###
+- Added named exports for `IndefiniteObservable` and `wrapWithObserver`.
+
 ## v1.0.2 (2018-11-27) ##
 ### Fixes ###
 - Added `private` annotation to `_connect`.

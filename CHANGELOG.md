@@ -1,5 +1,9 @@
 # Changelog #
 
+## v2.0.1 (2018-12-12) ##
+### Changes ###
+- Bundled version is now exported as `unpkg` rather than `browser` in `package.json`.  This should help prevent dependencies from being duplicated when bundled downstream.
+
 ## v2.0.0 (2018-12-10) ##
 ### Changes ###
 - Replaced `main` with `module` in `package.json`.  Both the `browser` and the `module` bundles use ES Modules.  We no longer distribute a CommonJS format.

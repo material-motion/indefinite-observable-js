@@ -11,9 +11,9 @@
     "build": "yarn run clean; tsc; rollup --config rollup.config.js",
     "prepublish": "yarn run build"
   },
-  "browser": "dist/indefinite-observable.bundle.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "unpkg": "dist/indefinite-observable.bundle.js",
   "typescript:main": "src/index.ts",
   "dependencies": {
     "symbol-observable": "1.2.0"
